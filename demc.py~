@@ -26,23 +26,29 @@ parser.add_option_group(group)
 
 nprocs = options.procnum
 
-def mpi_spawn(exe, type):
-  if type == "c":
-    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker_c.py"], maxprocs=nprocs)
-  else:
-    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker."+type, "--"+exe], maxprocs=nprocs)
+def mpi_spawn(exe):
+  comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker.py", "--"+exe], maxprocs=nprocs)
   return comm
 
-def mpi_scatter(comm, array, type):
-
+def mpi_scatter(comm, array):
   comm.Barrier()
+
+  # Check if the array can be scattered
+  if len(array) % nprocs != 0:
+    print("Array must be a multiple of nprocs: {0}".format(nprocs))
+    return 0
 
   # Check array contents type, then scatter accordingly.
   # If elements are not int or float, exit function.
-  comm.Scatter([array, type], None, root=MPI.ROOT)
+  if str(array.dtype) == 'float64':
+    comm.Scatter([array, MPI.DOUBLE], None, root=MPI.ROOT)
+  elif str(array.dtype) == 'int32':
+    comm.Scatter([array, MPI.INT], None, root=MPI.ROOT)
+  else:
+    print("Not a valid array type specified")
+    return 0
 
 def mpi_gather(comm, array):
-  comm.Barrier()
   # Check if the array can be gathered to
   if len(array) % nprocs != 0:
     print("Array must be a multiple of nprocs: {0}".format(nprocs))
@@ -56,9 +62,18 @@ def mpi_barrier(comm, quit=False):
     comm.Disconnect()
 
 # Add Spawn into a function
-comm1 = mpi_spawn("incon", "py")
-comm2 = mpi_spawn("transit", "c")
-comm3 = mpi_spawn("outcon", "py")
+comm1 = mpi_spawn("incon")
+comm2 = mpi_spawn("transit")
+comm3 = mpi_spawn("outcon")
+#comm1 = MPI.COMM_SELF.Spawn(sys.executable, args=["incon.py"],   maxprocs=nprocs)
+#comm2 = MPI.COMM_SELF.Spawn(sys.executable, args=["transit.py"], maxprocs=nprocs)
+#comm3 = MPI.COMM_SELF.Spawn(sys.executable, args=["outcon.py"],  maxprocs=nprocs)
+
+# Deprecate this
+procarray = np.ones(nprocs, dtype='i')*iterat
+mpi_scatter(comm1, procarray)
+mpi_scatter(comm2, procarray)
+mpi_scatter(comm3, procarray)
 
 # Test arrays
 array1 = np.ones(10*nprocs, dtype='d')*1.1
@@ -72,41 +87,34 @@ end_loop = np.zeros(nprocs, dtype='i')
 # Communication loop between input converter, transit, and output converter
 # DEMC is the hub
 # Make this into a while loop
-while np.mean(end_loop) < 1:
+while np.mean(end_loop) == False:
 #for x in np.arange(iterat):
+
   # Add Barrier() and Scatter() into a function.
   # Add Gather() into a function
 
   # Scatter array1 through input converter communicator
-  print("array1: {0}".format(array1))
-  mpi_scatter(comm1, array1, MPI.DOUBLE)
+  mpi_scatter(comm1, array1)
   array2 = mpi_gather(comm1, array2)
+  mpi_scatter(comm1, end_loop)
 
   # Scatter array2 through transit communicator
-  print("array2: {0}".format(array2))
-  mpi_scatter(comm2, array2, MPI.DOUBLE)
+  mpi_scatter(comm2, array2)
   array3 = mpi_gather(comm2, array3)
+  mpi_scatter(comm2, end_loop)
 
   # Scatter array3 through transit communicator
-  print("array3: {0}".format(array3))
-  mpi_scatter(comm3, array3, MPI.DOUBLE)
-  array4 = mpi_gather(comm3, array4)
-
-  print("array4: {0}".format(array4))
-  array1 = array4
-
-  if np.mean(array1) > 100000:
-    print("In here")
-    end_loop += 1
-
-  mpi_scatter(comm3, end_loop, MPI.INT)
-  mpi_scatter(comm2, end_loop, MPI.INT)
-  mpi_scatter(comm1, end_loop, MPI.INT)
+  mpi_scatter(comm3, array3)
+  array4 = mpi_scatter(comm3, array4)
+  mpi_scatter(comm3, end_loop)
 
   if np.mean(end_loop) == True:
-    print("array1, array2, array3: {0} {1} {2}".format(np.mean(array1), np.mean(array2), np.mean(array3)))
-    print("BREAK")
     break
+
+  array1 = array4
+
+  if np.mean(array1) > 10:
+    end_loop += 1
 
  # if x == 0:
  #   split = timeit.default_timer()
@@ -117,7 +125,6 @@ while np.mean(end_loop) < 1:
 
 # Orders each worker to halt until all have caught up
 # Then close communicators
-print("I got out!")
 mpi_barrier(comm1, quit=True)
 mpi_barrier(comm2, quit=True)
 mpi_barrier(comm3, quit=True)

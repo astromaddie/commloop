@@ -79,3 +79,4 @@ print("{0} {1} got out!".format(name, rank))
 # Close communicators after all workers have caught up
 comm.Barrier()
 comm.Disconnect()
+

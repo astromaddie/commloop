@@ -1,0 +1,17 @@
+
+Remote Memory Access
+
+Syntax
+
+mpicc rma_1.c -lm - o rma_1
+
+mpiexec -np # ./rma_1
+
+
+or
+
+mpicc rma_2.c -lm - o rma_2
+
+mpiexec -np # ./rma_2
+
+
