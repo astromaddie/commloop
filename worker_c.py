@@ -12,20 +12,20 @@ if version_info >= (2,6,0):
         import imp
         fp = None
         try:
-            fp, pathname, description = imp.find_module('_worker', [dirname(__file__)])
+            fp, pathname, description = imp.find_module('_worker_c', [dirname(__file__)])
         except ImportError:
-            import _worker
-            return _worker
+            import _worker_c
+            return _worker_c
         if fp is not None:
             try:
-                _mod = imp.load_module('_worker', fp, pathname, description)
+                _mod = imp.load_module('_worker_c', fp, pathname, description)
             finally:
                 fp.close()
             return _mod
-    _worker = swig_import_helper()
+    _worker_c = swig_import_helper()
     del swig_import_helper
 else:
-    import _worker
+    import _worker_c
 del version_info
 try:
     _swig_property = property
@@ -68,11 +68,11 @@ except AttributeError:
 
 
 def randomarray():
-  return _worker.randomarray()
-randomarray = _worker.randomarray
+  return _worker_c.randomarray()
+randomarray = _worker_c.randomarray
 
 def main(*args):
-  return _worker.main(*args)
-main = _worker.main
+  return _worker_c.main(*args)
+main = _worker_c.main
 
 

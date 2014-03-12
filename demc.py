@@ -28,7 +28,7 @@ nprocs = options.procnum
 
 def mpi_spawn(exe, type):
   if type == "c":
-    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker_c.py"], maxprocs=nprocs)
+    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker_c_wrapper.py"], maxprocs=nprocs)
   else:
     comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker."+type, "--"+exe], maxprocs=nprocs)
   return comm

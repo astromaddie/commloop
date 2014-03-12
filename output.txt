@@ -1,253 +1,80 @@
-worker.c: In function ‘main’:
-worker.c:35:10: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-In file included from worker_wrap.c:2700:0:
-worker.c: In function ‘main’:
-worker.c:35:10: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-/tmp/ccgdZX6x.o:(.rodata+0x3dc): multiple definition of `nelements1'
-/tmp/cc4iXpBA.o:(.rodata+0x0): first defined here
-/tmp/ccgdZX6x.o:(.rodata+0x3e0): multiple definition of `nelements2'
-/tmp/cc4iXpBA.o:(.rodata+0x4): first defined here
-/tmp/ccgdZX6x.o: In function `randomarray':
-worker_wrap.c:(.text+0x3337): multiple definition of `randomarray'
-/tmp/cc4iXpBA.o:worker.c:(.text+0x0): first defined here
-/tmp/ccgdZX6x.o: In function `main':
-worker_wrap.c:(.text+0x33cc): multiple definition of `main'
-/tmp/cc4iXpBA.o:worker.c:(.text+0x9a): first defined here
-/tmp/ccgdZX6x.o: In function `SWIG_Python_str_AsChar':
-worker_wrap.c:(.text+0xbbc): undefined reference to `PyString_AsString'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_str_FromChar':
-worker_wrap.c:(.text+0xbd6): undefined reference to `PyString_FromString'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_ErrorType':
-worker_wrap.c:(.text+0xc09): undefined reference to `PyExc_MemoryError'
-worker_wrap.c:(.text+0xc19): undefined reference to `PyExc_IOError'
-worker_wrap.c:(.text+0xc29): undefined reference to `PyExc_RuntimeError'
-worker_wrap.c:(.text+0xc36): undefined reference to `PyExc_IndexError'
-worker_wrap.c:(.text+0xc43): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0xc50): undefined reference to `PyExc_ZeroDivisionError'
-worker_wrap.c:(.text+0xc5d): undefined reference to `PyExc_OverflowError'
-worker_wrap.c:(.text+0xc6a): undefined reference to `PyExc_SyntaxError'
-worker_wrap.c:(.text+0xc77): undefined reference to `PyExc_ValueError'
-worker_wrap.c:(.text+0xc84): undefined reference to `PyExc_SystemError'
-worker_wrap.c:(.text+0xc91): undefined reference to `PyExc_AttributeError'
-worker_wrap.c:(.text+0xc9e): undefined reference to `PyExc_RuntimeError'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_AddErrorMsg':
-worker_wrap.c:(.text+0xcd1): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0xced): undefined reference to `PyErr_Fetch'
-worker_wrap.c:(.text+0xd06): undefined reference to `PyObject_Str'
-worker_wrap.c:(.text+0xd0f): undefined reference to `PyErr_Clear'
-worker_wrap.c:(.text+0xd54): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0xdbb): undefined reference to `PyExc_RuntimeError'
-worker_wrap.c:(.text+0xdca): undefined reference to `PyErr_SetString'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_SetErrorObj':
-worker_wrap.c:(.text+0xe02): undefined reference to `PyErr_SetObject'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_SetErrorMsg':
-worker_wrap.c:(.text+0xe5a): undefined reference to `PyErr_SetString'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_SetConstant':
-worker_wrap.c:(.text+0xe87): undefined reference to `PyDict_SetItemString'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_AppendOutput':
-worker_wrap.c:(.text+0xee8): undefined reference to `_Py_NoneStruct'
-worker_wrap.c:(.text+0xf55): undefined reference to `PyList_New'
-worker_wrap.c:(.text+0xf6e): undefined reference to `PyList_SetItem'
-worker_wrap.c:(.text+0xf81): undefined reference to `PyList_Append'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_UnpackTuple':
-worker_wrap.c:(.text+0x101b): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x1034): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x105e): undefined reference to `PyExc_SystemError'
-worker_wrap.c:(.text+0x106b): undefined reference to `PyErr_SetString'
-worker_wrap.c:(.text+0x10a8): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x10c4): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x10f9): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x1115): undefined reference to `PyErr_Format'
-/tmp/ccgdZX6x.o: In function `SWIG_Py_Void':
-worker_wrap.c:(.text+0x1186): undefined reference to `_Py_NoneStruct'
-/tmp/ccgdZX6x.o: In function `SwigPyClientData_New':
-worker_wrap.c:(.text+0x11f3): undefined reference to `PyClass_Type'
-worker_wrap.c:(.text+0x1238): undefined reference to `PyObject_GetAttrString'
-worker_wrap.c:(.text+0x1269): undefined reference to `PyTuple_New'
-worker_wrap.c:(.text+0x128a): undefined reference to `PyTuple_SetItem'
-worker_wrap.c:(.text+0x12be): undefined reference to `PyObject_GetAttrString'
-worker_wrap.c:(.text+0x12cb): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x12d5): undefined reference to `PyErr_Clear'
-/tmp/ccgdZX6x.o: In function `SwigPyObject_long':
-worker_wrap.c:(.text+0x143b): undefined reference to `PyLong_FromVoidPtr'
-/tmp/ccgdZX6x.o: In function `SwigPyObject_format':
-worker_wrap.c:(.text+0x145f): undefined reference to `PyTuple_New'
-worker_wrap.c:(.text+0x148e): undefined reference to `PyTuple_SetItem'
-worker_wrap.c:(.text+0x14c0): undefined reference to `PyString_Format'
-/tmp/ccgdZX6x.o: In function `SwigPyObject_repr':
-worker_wrap.c:(.text+0x15a8): undefined reference to `PyString_FromFormat'
-worker_wrap.c:(.text+0x15e0): undefined reference to `PyString_ConcatAndDel'
-/tmp/ccgdZX6x.o: In function `SwigPyObject_richcompare':
-worker_wrap.c:(.text+0x175e): undefined reference to `_Py_NotImplementedStruct'
-worker_wrap.c:(.text+0x1769): undefined reference to `_Py_NotImplementedStruct'
-worker_wrap.c:(.text+0x176e): undefined reference to `_Py_NotImplementedStruct'
-worker_wrap.c:(.text+0x179d): undefined reference to `_Py_TrueStruct'
-worker_wrap.c:(.text+0x17a7): undefined reference to `_Py_ZeroStruct'
-/tmp/ccgdZX6x.o: In function `SwigPyObject_dealloc':
-worker_wrap.c:(.text+0x18f6): undefined reference to `PyObject_CallFunctionObjArgs'
-worker_wrap.c:(.text+0x1a1c): undefined reference to `PyObject_Free'
-/tmp/ccgdZX6x.o: In function `SwigPyObject_own':
-worker_wrap.c:(.text+0x1b41): undefined reference to `PyArg_UnpackTuple'
-worker_wrap.c:(.text+0x1b65): undefined reference to `PyBool_FromLong'
-worker_wrap.c:(.text+0x1b7e): undefined reference to `PyObject_IsTrue'
-/tmp/ccgdZX6x.o: In function `_PySwigObject_type':
-worker_wrap.c:(.text+0x1c3a): undefined reference to `PyObject_GenericGetAttr'
-worker_wrap.c:(.text+0x1c71): undefined reference to `PyType_Type'
-/tmp/ccgdZX6x.o: In function `SwigPyObject_New':
-worker_wrap.c:(.text+0x1caf): undefined reference to `PyObject_Malloc'
-worker_wrap.c:(.text+0x1cba): undefined reference to `PyObject_Init'
-/tmp/ccgdZX6x.o: In function `SwigPyPacked_repr':
-worker_wrap.c:(.text+0x1e88): undefined reference to `PyString_FromFormat'
-worker_wrap.c:(.text+0x1eaa): undefined reference to `PyString_FromFormat'
-/tmp/ccgdZX6x.o: In function `SwigPyPacked_str':
-worker_wrap.c:(.text+0x1f3d): undefined reference to `PyString_FromFormat'
-/tmp/ccgdZX6x.o: In function `SwigPyPacked_dealloc':
-worker_wrap.c:(.text+0x209d): undefined reference to `PyObject_Free'
-/tmp/ccgdZX6x.o: In function `_PySwigPacked_type':
-worker_wrap.c:(.text+0x212c): undefined reference to `PyObject_GenericGetAttr'
-worker_wrap.c:(.text+0x214d): undefined reference to `PyType_Type'
-/tmp/ccgdZX6x.o: In function `SwigPyPacked_New':
-worker_wrap.c:(.text+0x218c): undefined reference to `PyObject_Malloc'
-worker_wrap.c:(.text+0x2197): undefined reference to `PyObject_Init'
-worker_wrap.c:(.text+0x2205): undefined reference to `PyObject_Free'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_GetSwigThis':
-worker_wrap.c:(.text+0x22fb): undefined reference to `PyInstance_Type'
-worker_wrap.c:(.text+0x2314): undefined reference to `_PyInstance_Lookup'
-worker_wrap.c:(.text+0x2329): undefined reference to `_PyObject_GetDictPtr'
-worker_wrap.c:(.text+0x235d): undefined reference to `PyDict_GetItem'
-worker_wrap.c:(.text+0x237b): undefined reference to `_PyWeakref_ProxyType'
-worker_wrap.c:(.text+0x238b): undefined reference to `_PyWeakref_CallableProxyType'
-worker_wrap.c:(.text+0x23cf): undefined reference to `PyObject_GetAttr'
-worker_wrap.c:(.text+0x2414): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x241e): undefined reference to `PyErr_Clear'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_ConvertPtrAndOwn':
-worker_wrap.c:(.text+0x24d0): undefined reference to `_Py_NoneStruct'
-worker_wrap.c:(.text+0x26f5): undefined reference to `PyObject_CallFunctionObjArgs'
-worker_wrap.c:(.text+0x2709): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x2713): undefined reference to `PyErr_Clear'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_ConvertFunctionPtr':
-worker_wrap.c:(.text+0x27f0): undefined reference to `PyCFunction_Type'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_NewShadowInstance':
-worker_wrap.c:(.text+0x29e8): undefined reference to `PyObject_Call'
-worker_wrap.c:(.text+0x2a03): undefined reference to `_PyObject_GetDictPtr'
-worker_wrap.c:(.text+0x2a2d): undefined reference to `PyDict_New'
-worker_wrap.c:(.text+0x2a57): undefined reference to `PyDict_SetItem'
-worker_wrap.c:(.text+0x2a5e): undefined reference to `PyDict_New'
-worker_wrap.c:(.text+0x2a7d): undefined reference to `PyDict_SetItem'
-worker_wrap.c:(.text+0x2a94): undefined reference to `PyInstance_NewRaw'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_SetSwigThis':
-worker_wrap.c:(.text+0x2aed): undefined reference to `_PyObject_GetDictPtr'
-worker_wrap.c:(.text+0x2b0f): undefined reference to `PyDict_New'
-worker_wrap.c:(.text+0x2b39): undefined reference to `PyDict_SetItem'
-worker_wrap.c:(.text+0x2b4c): undefined reference to `PyObject_GetAttrString'
-worker_wrap.c:(.text+0x2b6b): undefined reference to `PyDict_SetItem'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_GetModule':
-worker_wrap.c:(.text+0x2d4a): undefined reference to `PyCObject_Import'
-worker_wrap.c:(.text+0x2d56): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x2d60): undefined reference to `PyErr_Clear'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_SetModule':
-worker_wrap.c:(.text+0x2e4e): undefined reference to `Py_InitModule4_64'
-worker_wrap.c:(.text+0x2e63): undefined reference to `PyCObject_FromVoidPtr'
-worker_wrap.c:(.text+0x2e8a): undefined reference to `PyModule_AddObject'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_TypeCache':
-worker_wrap.c:(.text+0x2edd): undefined reference to `PyDict_New'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_TypeQuery':
-worker_wrap.c:(.text+0x2f25): undefined reference to `PyDict_GetItem'
-worker_wrap.c:(.text+0x2f3c): undefined reference to `PyCObject_AsVoidPtr'
-worker_wrap.c:(.text+0x2f81): undefined reference to `PyCObject_FromVoidPtr'
-worker_wrap.c:(.text+0x2f9c): undefined reference to `PyDict_SetItem'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_AddErrMesg':
-worker_wrap.c:(.text+0x301c): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x3054): undefined reference to `PyErr_Fetch'
-worker_wrap.c:(.text+0x306d): undefined reference to `PyObject_Str'
-worker_wrap.c:(.text+0x308d): undefined reference to `PyErr_Clear'
-worker_wrap.c:(.text+0x30c1): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x30f1): undefined reference to `PyErr_Format'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_ArgFail':
-worker_wrap.c:(.text+0x3157): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x3182): undefined reference to `PyOS_snprintf'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_TypeError':
-worker_wrap.c:(.text+0x3203): undefined reference to `PyObject_Str'
-worker_wrap.c:(.text+0x3233): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x3254): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x325d): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x3277): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x32ba): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x32d0): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x32d9): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x32eb): undefined reference to `PyErr_Format'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_MustGetPtr':
-worker_wrap.c:(.text+0x332d): undefined reference to `PyErr_Clear'
-/tmp/ccgdZX6x.o: In function `__Pyx_ImportModule':
-worker_wrap.c:(.text+0x3599): undefined reference to `PyString_FromString'
-worker_wrap.c:(.text+0x35b0): undefined reference to `PyImport_Import'
-/tmp/ccgdZX6x.o: In function `__Pyx_ImportFunction':
-worker_wrap.c:(.text+0x3669): undefined reference to `PyObject_GetAttrString'
-worker_wrap.c:(.text+0x368b): undefined reference to `PyDict_GetItemString'
-worker_wrap.c:(.text+0x36a2): undefined reference to `PyModule_GetName'
-worker_wrap.c:(.text+0x36ac): undefined reference to `PyExc_ImportError'
-worker_wrap.c:(.text+0x36c2): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x36da): undefined reference to `PyCapsule_IsValid'
-worker_wrap.c:(.text+0x36ea): undefined reference to `PyCapsule_GetName'
-worker_wrap.c:(.text+0x36f9): undefined reference to `PyModule_GetName'
-worker_wrap.c:(.text+0x3703): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x3723): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x3738): undefined reference to `PyCapsule_GetPointer'
-/tmp/ccgdZX6x.o: In function `__Pyx_ImportType':
-worker_wrap.c:(.text+0x3860): undefined reference to `PyString_FromString'
-worker_wrap.c:(.text+0x388e): undefined reference to `PyObject_GetAttr'
-worker_wrap.c:(.text+0x3960): undefined reference to `PyExc_TypeError'
-worker_wrap.c:(.text+0x3980): undefined reference to `PyErr_Format'
-worker_wrap.c:(.text+0x39d4): undefined reference to `PyOS_snprintf'
-worker_wrap.c:(.text+0x39ed): undefined reference to `PyErr_WarnEx'
-worker_wrap.c:(.text+0x3a0a): undefined reference to `PyExc_ValueError'
-worker_wrap.c:(.text+0x3a2a): undefined reference to `PyErr_Format'
-/tmp/ccgdZX6x.o: In function `SWIG_AsVal_double':
-worker_wrap.c:(.text+0x423a): undefined reference to `PyFloat_Type'
-worker_wrap.c:(.text+0x4249): undefined reference to `PyFloat_Type'
-worker_wrap.c:(.text+0x4251): undefined reference to `PyType_IsSubtype'
-worker_wrap.c:(.text+0x4268): undefined reference to `PyFloat_AsDouble'
-worker_wrap.c:(.text+0x42a6): undefined reference to `PyInt_AsLong'
-worker_wrap.c:(.text+0x42df): undefined reference to `PyLong_AsDouble'
-worker_wrap.c:(.text+0x42e9): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x430c): undefined reference to `PyErr_Clear'
-/tmp/ccgdZX6x.o: In function `SWIG_AsVal_long':
-worker_wrap.c:(.text+0x434d): undefined reference to `PyInt_AsLong'
-worker_wrap.c:(.text+0x4380): undefined reference to `PyLong_AsLong'
-worker_wrap.c:(.text+0x4389): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x43ac): undefined reference to `PyErr_Clear'
-/tmp/ccgdZX6x.o: In function `_wrap_randomarray':
-worker_wrap.c:(.text+0x4444): undefined reference to `PyArg_ParseTuple'
-/tmp/ccgdZX6x.o: In function `_wrap_main':
-worker_wrap.c:(.text+0x44c5): undefined reference to `PyArg_ParseTuple'
-/tmp/ccgdZX6x.o: In function `swig_varlink_repr':
-worker_wrap.c:(.text+0x4984): undefined reference to `PyString_FromString'
-/tmp/ccgdZX6x.o: In function `swig_varlink_str':
-worker_wrap.c:(.text+0x499c): undefined reference to `PyString_FromString'
-worker_wrap.c:(.text+0x49bd): undefined reference to `PyString_FromString'
-worker_wrap.c:(.text+0x49cf): undefined reference to `PyString_ConcatAndDel'
-worker_wrap.c:(.text+0x49e6): undefined reference to `PyString_FromString'
-worker_wrap.c:(.text+0x49f8): undefined reference to `PyString_ConcatAndDel'
-worker_wrap.c:(.text+0x4a15): undefined reference to `PyString_FromString'
-worker_wrap.c:(.text+0x4a27): undefined reference to `PyString_ConcatAndDel'
-/tmp/ccgdZX6x.o: In function `swig_varlink_getattr':
-worker_wrap.c:(.text+0x4b96): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x4ba2): undefined reference to `PyExc_NameError'
-worker_wrap.c:(.text+0x4baf): undefined reference to `PyErr_SetString'
-/tmp/ccgdZX6x.o: In function `swig_varlink_setattr':
-worker_wrap.c:(.text+0x4c2c): undefined reference to `PyErr_Occurred'
-worker_wrap.c:(.text+0x4c38): undefined reference to `PyExc_NameError'
-worker_wrap.c:(.text+0x4c45): undefined reference to `PyErr_SetString'
-/tmp/ccgdZX6x.o: In function `swig_varlink_type':
-worker_wrap.c:(.text+0x4ced): undefined reference to `PyType_Type'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_newvarlink':
-worker_wrap.c:(.text+0x4d20): undefined reference to `PyObject_Malloc'
-worker_wrap.c:(.text+0x4d2b): undefined reference to `PyObject_Init'
-/tmp/ccgdZX6x.o: In function `SWIG_Python_InstallConstants':
-worker_wrap.c:(.text+0x4f83): undefined reference to `PyDict_SetItemString'
-/tmp/ccgdZX6x.o: In function `init_worker':
-worker_wrap.c:(.text+0x52d9): undefined reference to `Py_InitModule4_64'
-worker_wrap.c:(.text+0x52e9): undefined reference to `PyModule_GetDict'
-/tmp/ccgdZX6x.o:(.rodata+0xc30): undefined reference to `PyObject_GenericGetAttr'
-/tmp/ccgdZX6x.o:(.rodata+0xdd0): undefined reference to `PyObject_GenericGetAttr'
-collect2: ld returned 1 exit status
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
+Traceback (most recent call last):
+  File "worker_c_wrapper.py", line 1, in <module>
+    import worker_c as c
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 25, in <module>
+    _worker_c = swig_import_helper()
+  File "/home/maddie/code/bart_commloop/worker_c.py", line 21, in swig_import_helper
+    _mod = imp.load_module('_worker_c', fp, pathname, description)
+ImportError: /home/maddie/code/bart_commloop/_worker_c.so: undefined symbol: ompi_mpi_int
