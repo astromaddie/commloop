@@ -17,14 +17,14 @@ To compile with SWIG to interface with demc.py:
 
 1. Generate the swig wrapper with
 
-  > swig -python worker_c.i
+  > >swig -python worker_c.i
 
 2. Compile it with
 
-  > mpicc -fPIC $(python-config --includes) -c worker_c.c worker_c_wrap.c
+  > >mpicc -fPIC $(python-config --includes) -c worker_c.c worker_c_wrap.c
 
 3. Create the shared object file with
 
-  > ld -zmuldefs -shared worker_c.o worker_c_wrap.o -o _worker_c.so
+  > >ld -zmuldefs -shared worker_c.o worker_c_wrap.o -o _worker_c.so
 
 The resulting python file will just need to be imported into another code, upon which the functions may be called normally.
