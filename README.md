@@ -7,12 +7,18 @@ Files:
 - demc.py
  - Holds all the master MPI calls
 - worker.py
- - Holds worker MPI calls for input converter (formerly in incon.py) and output converter (formerly in outcon.py)
+ - Holds worker MPI calls for input converter and output converter
 - worker.c
  - Holds worker MPI calls for transit (formerly in transit.py)
-- incon.py
- - Deprecated worker for input converter
-- transit.py
- - Deprecated worker for transit
-- outcon.py
- - Deprecated worker for output converter
+- worker.i
+ - SWIG interface file for compiling C wrapped in Python code.
+
+To compile with SWIG to interface with demc.py:
+- Generate the swig wrapper with
+  > swig -python worker_c.i
+- Compile it with
+  > mpicc -fPIC $(python-config --includes) -c worker_c.c worker_c_wrap.c
+- Create the shared object file with
+  > ld -zmuldefs -shared worker_c.o worker_c_wrap.o -o _worker_c.so
+
+The resulting python file will just need to be imported into another code, upon which the functions may be called normally.
