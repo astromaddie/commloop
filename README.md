@@ -14,6 +14,7 @@ Files:
  - SWIG interface file for compiling C wrapped in Python code.
 
 To compile with SWIG to interface with demc.py:
+
 1. Generate the swig wrapper with
 
   > swig -python worker_c.i
