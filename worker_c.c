@@ -5,12 +5,11 @@
 const int nelements1 = 1E3;
 const int nelements2 = 1E6;
 
-int randomarray(){
+int outarray(){
 	float* array = malloc(sizeof(float) * nelements2);
 	int i = 0;
-	srand(time(NULL));
 	for( i = 0; i < nelements2; i++ ){
-		array[i] = rand() + 1E6;
+		array[i] = 1.110001;
 	}
 
 	return *array;
@@ -32,7 +31,7 @@ int recv = 1;
 MPI_Comm_rank(MPI_COMM_WORLD, &myid);
 MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-output = (void *)randomarray();
+output = (void *)outarray();
 
 
 //OMPI_DECLSPEC  int MPI_Scatter(void *sendbuf, int sendcount, MPI_Datatype sendtype,
