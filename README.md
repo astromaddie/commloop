@@ -25,6 +25,6 @@ To compile with SWIG to interface with demc.py:
 
 3. Create the shared object file with
 
-  > ld -zmuldefs -shared worker_c.o worker_c_wrap.o -o _worker_c.so
+  > mpicc -zmuldefs -shared worker_c.o worker_c_wrap.o -o _worker_c.so
 
 The resulting python file will just need to be imported into another code, upon which the functions may be called normally.
