@@ -8,6 +8,5 @@
 
 %include mpi4py/mpi4py.i
 %mpi4py_typemap(Comm, MPI_Comm);
-void outarray();
-void main(int argc, char *argv[]);
+void main(int argc, char *argv);
 
