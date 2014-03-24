@@ -2,6 +2,27 @@
 #include <stdlib.h>
 #include <mpi.h>
 
+/* MPI Comm Loop - C worker
+by Madison Stemm & Andrew Foster
+Completed 3/24/2014 */
+
+/*
+ This file is part of CommLoop.
+
+ CommLoop is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ CommLoop is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 int worker_loop(int argc, char *argv[]){
 int nelements1 = 1E3;
 int nelements2 = 1E6;
@@ -14,44 +35,32 @@ double sendbuff[nelements1];
 int recv = 1;
 int i = 0;
 
-//printf("We've initialized stuff, moving on to MPI!!\n");
-
-//MPI_Init(&argc, &argv);
-
-//printf("Init just happened, we're alive!\n");
-
+// Open communications with the Master
 MPI_Comm comm;
 MPI_Comm_get_parent(&comm);
 
-//printf("We found our parents, according to Maury!\n\nDoom is here!\n");
-
-MPI_Comm_rank(MPI_COMM_WORLD, &myid);
-MPI_Comm_size(MPI_COMM_WORLD, &world_size);
-
-//printf("\nEntering Process %d\n", myid);
-
-//printf("Y2K came and went. Bummer.\n");
-
+// Populate sample array
 for( i = 0; i < nelements2; i++ ){
 	output[i] = 1.9;
 }
-
-printf("Output full of %f\n",output[0]);
-
-//MPI_Barrier(comm);
-//MPI_Scatter(sendbuff, nelements1, MPI_INT, endloop, recv, MPI_INT, root, comm);
-
+// Endloop flag
 endloop[0] = 0;
-
 while ( endloop[0] < 1) {
+
+	// Scatter in the array from the first worker's output
 	MPI_Barrier(comm);
 	MPI_Scatter(sendbuff, nelements1, MPI_DOUBLE, input, nelements1, MPI_DOUBLE, root, comm);
+
+	// Scatter back out the new array
 	MPI_Barrier(comm);
 	MPI_Gather(output, nelements2, MPI_DOUBLE, sendbuff, nelements1, MPI_DOUBLE, root, comm);
+
+	// Collect the current loop's endloop flag
 	MPI_Barrier(comm);
 	MPI_Scatter(sendbuff, nelements1, MPI_INT, endloop, recv, MPI_INT, root, comm);
 }
 
+// Close communications
 MPI_Finalize();
 
 }
