@@ -1,4 +1,4 @@
-commloop
+CommLoop
 ========
 
 MPI-based communication loop framework for BART
@@ -7,13 +7,17 @@ Files:
 - `master.py`
  - Holds all the master MPI calls
 - `worker.py`
- - Holds worker MPI calls for input converter and output converter
+ - Holds worker MPI calls for both Python portions of CommLoop
 - `src/worker_c.c`
- - Holds worker MPI calls for transit (formerly in transit.py)
+ - Holds worker MPI calls for the C portion of CommLoop
 - `src/worker_c.i`
  - SWIG interface file for compiling C wrapped in Python code.
+- `_worker_c.so`
+ - Compiled worker_c shared object file
+- `worker_c.py`
+ - SWIG wrapper to execute `_worker_c.so`
 - `worker_c_wrapper.py`
- - Python wrapper code to import worker_loop() from the SWIG-compiled worker_c
+ - Python code to run worker_loop() from the SWIG-compiled worker_c
 
 To compile with SWIG to interface with demc.py:
 
