@@ -7,7 +7,7 @@ import optparse
 
 '''
  * MPI CommLoop - Python Master
- * by Madison Stemm & Andrew Foster
+ * by Madison Stemm
  * Completed 3/24/2014
  *
  * This file is part of CommLoop.
