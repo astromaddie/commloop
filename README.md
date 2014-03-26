@@ -1,7 +1,19 @@
 CommLoop
 ========
 
-MPI-based communication loop framework for BART
+MPI-based communication loop framework; designed for communication between Python and C programs.
+
+The master code acts as a hub, where it sends data to the first Python worker and awaits output. The outputted data from PyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to PyWorker2. Once that data is returned to Master, the loop repeats.
+
+The code currently passes dummy arrays witht the following structure:
+- Master    --array1--> PyWorker1
+- PyWorker1 --array2--> Master
+- Master    --array2--> cWorker
+- cWorker   --array3--> Master
+- Master    --array3--> PyWorker2
+- PyWorker2 --array4--> Master
+
+  _--repeat--_
 
 Files:
 - `master.py`
