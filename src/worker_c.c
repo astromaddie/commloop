@@ -3,7 +3,7 @@
 #include <mpi/mpi.h>
 
 /* MPI CommLoop - C worker
- * by Madison Stemm & Andrew Foster
+ * by Madison Stemm
  * Completed 3/24/2014
  *
  * This file is part of CommLoop.
