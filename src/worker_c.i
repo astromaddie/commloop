@@ -1,6 +1,7 @@
-'''
- * MPI CommLoop - C worker python wrapper
- * by Madison Stemm
+// file: worker_c.i
+/* SWIG Interface wrapper
+ * For interfacing the C worker
+ *    with a python master
  * Completed 3/24/2014
  *
  * This file is part of CommLoop.
@@ -17,8 +18,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with CommLoop.  If not, see <http://www.gnu.org/licenses/>.
-'''
-# Python script to execute the SWIG-wrapped MPI C worker
-import worker_c as c
+*/
 
-c.worker_loop(0, None)
+%module worker_c
+%{
+%}
+
+%include mpi4py/mpi4py.i
+%mpi4py_typemap(Comm, MPI_Comm);
+int worker_loop(int argc, char **argv[]);

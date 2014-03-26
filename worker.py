@@ -2,24 +2,25 @@ from mpi4py import MPI
 import numpy as np
 import optparse
 
-# MPI CommLoop - Python Worker
-# by Madison Stemm
-# Completed 3/24/2014
 '''
- This file is part of CommLoop.
-
- CommLoop is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- CommLoop is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * MPI CommLoop - Python Worker
+ * by Madison Stemm
+ * Completed 3/24/2014
+ *
+ * This file is part of CommLoop.
+ *
+ * CommLoop is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CommLoop is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with CommLoop.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 ################### Terminal Flag Parser ###################
@@ -52,28 +53,35 @@ if worker_type == "outcon":
   switch = 1
 
 ################### MPI Functions ###################
-def mpi_scatter(array):
+def comm_scatter(array):
   comm.Barrier()
   comm.Scatter(None, array, root=0)
   return array
 
-def mpi_gather(array, type):
+def comm_gather(array, type):
   # Check array contents type, then scatter accordingly.
   # If elements are not int or float, exit function.
   comm.Barrier()
   comm.Gather([array, type], None, root=0)
 
-def mpi_barrier():
+def comm_barrier():
   comm.Barrier()
 
 def worker_loop(array_1, array_2, end_loop):
-  array = mpi_scatter(array_1)
+  array = comm_scatter(array_1)
   array_2 = array_2 * (np.mean(array) * 1.2)
-  mpi_gather(array_2, MPI.DOUBLE)
+  comm_gather(array_2, MPI.DOUBLE)
   return array_2
 #####################################################
 
 # Sample arrays
+# Arrays are passed between the workers
+#  following the format:
+#  InputArray -> Worker -> OutputArray
+# array1 -> comm1 -> array2
+# array2 -> comm2 -> array3
+# array3 -> comm3 -> array4
+#     array1 = array4
 array1 = np.ones(10, dtype='d')
 array2 = np.ones(1000, dtype='d')
 array3 = np.ones(1e6, dtype='d')
@@ -88,7 +96,7 @@ while end_loop[0] == False:
     array2 = worker_loop(array1, array2, end_loop)
   elif switch == 1:
     array4 = worker_loop(array3, array4, end_loop)
-  end_loop = mpi_scatter(end_loop)
+  end_loop = comm_scatter(end_loop)
 
 # Close communications and disconnect
 comm.Barrier()

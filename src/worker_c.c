@@ -1,26 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <mpi.h>
+#include <mpi/mpi.h>
 
-/* MPI Comm Loop - C worker
-by Madison Stemm & Andrew Foster
-Completed 3/24/2014 */
-
-/*
- This file is part of CommLoop.
-
- CommLoop is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- CommLoop is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+/* MPI CommLoop - C worker
+ * by Madison Stemm & Andrew Foster
+ * Completed 3/24/2014
+ *
+ * This file is part of CommLoop.
+ *
+ * CommLoop is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CommLoop is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with CommLoop.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 int worker_loop(int argc, char *argv[]){
@@ -43,7 +42,7 @@ MPI_Comm_get_parent(&comm);
 for( i = 0; i < nelements2; i++ ){
 	output[i] = 1.9;
 }
-// Endloop flag
+// Endloop flag, handled as an array for MPI
 endloop[0] = 0;
 while ( endloop[0] < 1) {
 
@@ -55,7 +54,7 @@ while ( endloop[0] < 1) {
 	MPI_Barrier(comm);
 	MPI_Gather(output, nelements2, MPI_DOUBLE, sendbuff, nelements1, MPI_DOUBLE, root, comm);
 
-	// Collect the current loop's endloop flag
+	// Define whether or not to break the loop
 	MPI_Barrier(comm);
 	MPI_Scatter(sendbuff, nelements1, MPI_INT, endloop, recv, MPI_INT, root, comm);
 }
