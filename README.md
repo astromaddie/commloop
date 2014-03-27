@@ -18,22 +18,8 @@ The code currently passes dummy arrays in the following structure:
 |                 | Array1 = Array4 |                 |
 |                 | _repeat_        |                 |
 
-Files:
 
-- `master.py`
- - Holds all the master MPI calls
-- `worker.py`
- - Holds worker MPI calls for both Python portions of CommLoop
-- `src/worker_c.c`
- - Holds worker MPI calls for the C portion of CommLoop
-- `src/worker_c.i`
- - SWIG interface file for compiling C wrapped in Python code.
-- `_worker_c.so`
- - Compiled worker_c shared object file
-- `worker_c.py`
- - SWIG wrapper to execute `_worker_c.so`
-- `worker_c_wrapper.py`
- - Python code to run worker_loop() from the SWIG-compiled worker_c
+###Compile the C Worker
 
 To compile with SWIG to interface with demc.py:
 
@@ -51,12 +37,29 @@ To compile with SWIG to interface with demc.py:
 
 The resulting python file will just need to be imported into another code, upon which the functions may be called normally.
 
+###Files
+
+- `master.py`
+ - Holds all the master MPI calls
+- `worker.py`
+ - Holds worker MPI calls for both Python portions of CommLoop
+- `src/worker_c.c`
+ - Holds worker MPI calls for the C portion of CommLoop
+- `src/worker_c.i`
+ - SWIG interface file for compiling C wrapped in Python code.
+- `_worker_c.so`
+ - Compiled worker_c shared object file
+- `worker_c.py`
+ - SWIG wrapper to execute `_worker_c.so`
+- `worker_c_wrapper.py`
+ - Python code to run worker_loop() from the SWIG-compiled worker_c
+
 
 ###CommLoop Benchmarks
 
-Performance hit is minimal.
+Performance is fairly constant when arrays are all the same size, but handling arrays of varying sizes produces a performance hit.
 
-#### 1-byte arrays, 100 iterations
+#### 4 1B arrays, 100 iterations
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
@@ -66,7 +69,7 @@ Performance hit is minimal.
 | Avg iteration   | 0.0516275525093  |
 | Total Code      | 8.58752012253    |
 
-#### 100-megabyte arrays, 100 iterations
+#### 4 100MB arrays, 100 iterations
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
@@ -76,7 +79,7 @@ Performance hit is minimal.
 | Avg iteration   | 0.0841367840767  |
 | Total Code      | 11.9525020123    |
 
-#### 100-megabyte arrays, 1000 iterations
+#### 4 100MB arrays, 1000 iterations
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
@@ -85,3 +88,13 @@ Performance hit is minimal.
 | Last loop iter  | 0.0827310085297  |
 | Avg iteration   | 0.0984846527576  |
 | Total Code      | 102.092504025    |
+
+#### 1.25B, 125B, 125MB, 1.25B arrays, 100 iterations
+
+| Part of code    | Time (seconds)   |
+| :-------------: | :-------------:  |
+| Start MPI Comm  | 3.52986693382    |
+| First loop iter | 1.15215110779    |
+| Last loop iter  | 0.39165186882    |
+| Avg iteration   | 0.40219643116    |
+| Total Code      | 43.7606859207    |
