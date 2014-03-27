@@ -19,9 +19,11 @@ The code currently passes dummy arrays in the following structure:
 |                 | _repeat_        |                 |
 
 
-###Compilation
+###Makefile
 
-To compile with SWIG to interface with demc.py:
+To compile the C worker, simply call `make` in src/ and move the shared object file out to the directory with the Python scripts.
+
+The makefile generates Python-executable C code with the following steps
 
 1. Generate the SWIG wrapper with
 
@@ -35,7 +37,7 @@ To compile with SWIG to interface with demc.py:
 
   > `mpicc -shared worker_c.o worker_c_wrap.o -o _worker_c.so`
 
-The resulting python file will just need to be imported into another code, upon which the functions may be called normally.
+The resulting python file just needs to be imported into another code, upon which the functions may be called normally.
 
 ###Files
 
@@ -43,6 +45,8 @@ The resulting python file will just need to be imported into another code, upon 
  - Holds all the master MPI calls
 - `worker.py`
  - Holds worker MPI calls for both Python portions of CommLoop
+- `src/Makefile`
+ - Compiles the Python-executable C worker
 - `src/worker_c.c`
  - Holds worker MPI calls for the C portion of CommLoop
 - `src/worker_c.i`
