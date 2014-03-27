@@ -1,21 +1,25 @@
-CommLoop
-========
+###CommLoop
 
 MPI-based communication loop framework; designed for communication between Python and C programs.
 
 The master code acts as a hub, where it sends data to the first Python worker and awaits output. The outputted data from PyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to PyWorker2. Once that data is returned to Master, the loop repeats.
 
-The code currently passes dummy arrays witht the following structure:
-- Master    --array1--> PyWorker1
-- PyWorker1 --array2--> Master
-- Master    --array2--> cWorker
-- cWorker   --array3--> Master
-- Master    --array3--> PyWorker2
-- PyWorker2 --array4--> Master
+The code currently passes dummy arrays in the following structure:
 
-  _--repeat--_
+
+| Sender          | Data            | Receiver        |
+| :-------------: | :-------------: | :-------------: |
+| Master          | Array1          | pyWorker1       |
+| pyWorker1       | Array2          | Master          |
+| Master          | Array2          | cWorker         |
+| cWorker         | Array3          | Master          |
+| Master          | Array3          | pyWorker2       |
+| pyWorker2       | Array4          | Master          |
+|                 | Array1 = Array4 |                 |
+|                 | _repeat_        |                 |
 
 Files:
+
 - `master.py`
  - Holds all the master MPI calls
 - `worker.py`
