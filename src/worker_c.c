@@ -23,7 +23,7 @@
 */
 
 int worker_loop(int argc, char *argv[]){
-int nelements1 = 1E3;
+int nelements1 = 1000;
 int nelements2 = 1E6;
 int myid, world_size;//, size;
 int root = 0;
@@ -40,7 +40,7 @@ MPI_Comm_get_parent(&comm);
 
 // Populate sample array
 for( i = 0; i < nelements2; i++ ){
-	output[i] = 1.9;
+	output[i] = 1.00001;
 }
 // Endloop flag, handled as an array for MPI
 endloop[0] = 0;
