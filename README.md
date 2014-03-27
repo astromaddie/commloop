@@ -50,3 +50,38 @@ To compile with SWIG to interface with demc.py:
   > `mpicc -shared worker_c.o worker_c_wrap.o -o _worker_c.so`
 
 The resulting python file will just need to be imported into another code, upon which the functions may be called normally.
+
+
+###CommLoop Benchmarks
+
+Performance hit is minimal.
+
+#### 1-byte arrays, 100 iterations
+
+| Part of code    | Time (seconds)   |
+| :-------------: | :-------------:  |
+| Start MPI Comm  | 3.40975117683    |
+| First loop iter | 0.83363199234    |
+| Last loop iter  | 0.0146758556366  |
+| Avg iteration   | 0.0516275525093  |
+| Total Code      | 8.58752012253    |
+
+#### 100-megabyte arrays, 100 iterations
+
+| Part of code    | Time (seconds)   |
+| :-------------: | :-------------:  |
+| Start MPI Comm  | 3.52083706856    |
+| First loop iter | 0.434430837631   |
+| Last loop iter  | 0.0823819637299  |
+| Avg iteration   | 0.0841367840767  |
+| Total Code      | 11.9525020123    |
+
+#### 100-megabyte arrays, 1000 iterations
+
+| Part of code    | Time (seconds)   |
+| :-------------: | :-------------:  |
+| Start MPI Comm  | 3.45876288414    |
+| First loop iter | 1.12678909302    |
+| Last loop iter  | 0.0827310085297  |
+| Avg iteration   | 0.0984846527576  |
+| Total Code      | 102.092504025    |
