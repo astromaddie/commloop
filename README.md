@@ -89,7 +89,7 @@ Performance is fairly constant when arrays are all the same size, but handling a
 | Avg iteration   | 0.0984846527576  |
 | Total Code      | 102.092504025    |
 
-#### 1.25B, 125B, 125MB, 1.25B arrays, 100 iterations
+#### 2 1.25B, 1 125B, 1 125MB arrays, 100 iterations
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
