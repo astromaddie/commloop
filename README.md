@@ -19,7 +19,7 @@ The code currently passes dummy arrays in the following structure:
 |                 | _repeat_        |                 |
 
 
-###Compile the C Worker
+###Compilation
 
 To compile with SWIG to interface with demc.py:
 
