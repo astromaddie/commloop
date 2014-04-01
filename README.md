@@ -61,7 +61,7 @@ The resulting python file just needs to be imported into another code, upon whic
 
 ###CommLoop Benchmarks
 
-Performance is fairly constant when arrays are all the same size, but handling arrays of varying sizes produces a performance hit. All of the following benchmarks are done with 10 processes
+Performance is fairly constant when arrays are all the same size, but handling arrays of varying sizes produces a performance hit. All of the following benchmarks are done with 10 processes per spawned worker.
 
 #### 4 1B arrays, 100 iterations
 
