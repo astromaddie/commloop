@@ -61,39 +61,23 @@ The resulting python file just needs to be imported into another code, upon whic
 
 ###CommLoop Benchmarks
 
-Performance is fairly constant when arrays are all the same size, but handling arrays of varying sizes produces a performance hit. All of the following benchmarks are done with 10 processes per spawned worker.
+All of the following benchmarks are done with 10 processes per spawned Python worker with 400 iterations. The cumulative times are then averaged. Performance remains constant up to about 1KB, and begins decreasing linearly as the array size is increased. 10MB arrays were untested, but assumed to be on the order of 45s. Interestingly, consecutively handling arrays of varying sizes results in a larger performance loss. The final benchmark (10B, 1KB, 1MB, 10B) was run with the default sourcecode setup, with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns. The loop speeds indicate less performance loss with a C worker, than a Python worker.
 
-#### 4 1B arrays, 100 iterations
+#### 
 
-| Part of code    | Time (seconds)   |
-| :-------------: | :-------------:  |
-| Start MPI Comm  | 3.40975117683    |
-| First loop iter | 0.83363199234    |
-| Last loop iter  | 0.0146758556366  |
-| Avg iteration   | 0.0516275525093  |
-| Total Code      | 8.58752012253    |
+| Size of Array    | Mean Time (in seconds)    |
+| :-------------:  | :-------------:           |
+|         1B       |       0.00505563914776    |
+|        10B       |       0.0050656175613     |
+|       100B       |       0.0056332963705     |
+|        1KB       |       0.00832622706890    |
+|       10KB       |       0.0449095028639     |
+|      100KB       |       0.492187131643      |
+|        1MB       |       4.45193855694       |
+| 1B, 10B, 100B, 1KB, 10KB      | 0.0697515845299    |
+| 10B, 1KB, 1MB, 10B      | 0.40219643116      |
 
-#### 4 100MB arrays, 100 iterations
-
-| Part of code    | Time (seconds)   |
-| :-------------: | :-------------:  |
-| Start MPI Comm  | 3.52083706856    |
-| First loop iter | 0.434430837631   |
-| Last loop iter  | 0.0823819637299  |
-| Avg iteration   | 0.0841367840767  |
-| Total Code      | 11.9525020123    |
-
-#### 4 100MB arrays, 1000 iterations
-
-| Part of code    | Time (seconds)   |
-| :-------------: | :-------------:  |
-| Start MPI Comm  | 3.45876288414    |
-| First loop iter | 1.12678909302    |
-| Last loop iter  | 0.0827310085297  |
-| Avg iteration   | 0.0984846527576  |
-| Total Code      | 102.092504025    |
-
-#### 2 10B, 1 1KB, 1 1MB arrays, 100 iterations
+#### 10B, 1KB, 1MB, 10B arrays, 100 iterations
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
