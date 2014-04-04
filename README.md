@@ -63,7 +63,7 @@ The resulting python file just needs to be imported into another code, upon whic
 
 All of the following benchmarks are done with 10 processes per spawned Python worker with 400 iterations. The cumulative times are then averaged. Performance remains constant up to about 1KB, and begins decreasing linearly as the array size is increased. 10MB arrays were untested, but assumed to be on the order of 45s. Interestingly, consecutively handling arrays of varying sizes results in a larger performance loss. The final benchmark (10B, 1KB, 1MB, 10B) was run with the default sourcecode setup, with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns. The loop speeds indicate less performance loss with a C worker, than a Python worker.
 
-#### 
+#### Runtimes
 
 | Size of Array    | Mean Time (in seconds)    |
 | :-------------:  | :-------------:           |
@@ -77,7 +77,7 @@ All of the following benchmarks are done with 10 processes per spawned Python wo
 | 1B, 10B, 100B, 1KB, 10KB      | 0.0697515845299    |
 | 10B, 1KB, 1MB, 10B      | 0.40219643116      |
 
-#### 10B, 1KB, 1MB, 10B arrays, 100 iterations
+#### Default setup breakdown
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
