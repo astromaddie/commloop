@@ -1,6 +1,6 @@
 from mpi4py import MPI
 import numpy as np
-import optparse
+import argparse
 
 '''
  * MPI CommLoop - Python Worker
@@ -25,18 +25,20 @@ import optparse
 
 ################### Terminal Flag Parser ###################
 # Initialise parser
-parser = optparse.OptionParser("usage: %prog [options] [arg1]")
+parser = argparse.ArgumentParser("usage: %prog [options] [arg1]")
 
 # Add options
-parser.add_option("--incon", action="store_const", const="incon",
+parser.add_argument("--demc",  action='store_const', const='demc',
+                  help="Spawn DEMC worker.", dest='worker')
+parser.add_argument("--incon", action="store_const", const="incon",
                   help="Spawn input converter worker.", dest="worker")
-parser.add_option("--transit", action="store_const", const="transit",
+parser.add_argument("--transit", action="store_const", const="transit",
                   help="Spawn transit worker.", dest="worker")
-parser.add_option("--outcon", action="store_const", const="outcon",
+parser.add_argument("--outcon", action="store_const", const="outcon",
                   help="Spawn output converter worker.", dest="worker")
 
 # Retrieve all options and arguments:
-(options, args) = parser.parse_args()
+options = parser.parse_args()
 worker_type = options.worker
 ############################################################
 
@@ -45,12 +47,15 @@ comm = MPI.Comm.Get_parent()
 rank  = comm.Get_rank()
 size  = comm.Get_size()
 
+if worker_type == "demc":
+  name = "DEMC"
+  switch = 0
 if worker_type == "incon":
   name = "InputConverter"
-  switch = 0
+  switch = 1
 if worker_type == "outcon":
   name = "OutputConverter"
-  switch = 1
+  switch = 2
 
 ################### MPI Functions ###################
 def comm_scatter(array):
@@ -68,8 +73,9 @@ def comm_barrier():
   comm.Barrier()
 
 def worker_loop(array_1, array_2, end_loop):
-  array = comm_scatter(array_1)
-  array_2 = array_2 * (np.mean(array) * 1.2)
+  array_1 = comm_scatter(array_1)
+  scale = np.mean(array_1) * 1.000001
+  array_2 = np.multiply(array_2, scale)
   comm_gather(array_2, MPI.DOUBLE)
   return array_2
 #####################################################
@@ -93,8 +99,10 @@ while end_loop[0] == False:
   if np.mean(end_loop) == True:
     break
   if switch == 0:
-    array2 = worker_loop(array1, array2, end_loop)
+    array1 = worker_loop(array4, array1, end_loop)
   elif switch == 1:
+    array2 = worker_loop(array1, array2, end_loop)
+  elif switch == 2:
     array4 = worker_loop(array3, array4, end_loop)
   end_loop = comm_scatter(end_loop)
 

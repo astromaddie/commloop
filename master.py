@@ -30,7 +30,7 @@ start = timeit.default_timer()
 # Create nprocs number of processes of eaach worker script, spawn communicators,
 #  and send them the number of processes
 nprocs = 10
-iterat = 100
+iterat = 10
 
 ################### Terminal Flag Parser ###################
 # Initialise parser
@@ -40,13 +40,14 @@ parser = argparse.ArgumentParser("usage: %prog [options] [arg1]")
 group = parser.add_argument_group('Runtime Options')
 group.add_argument("-p", "--num-procs", action="store",
                  help="Number of worker processes per spawn [default: %default]",
-                 dest="procnum", type="int", default=10)
+                 dest="procnum", type=int, default=10)
 group.add_argument("-g", "--benchmark", action="store_true", dest="bench", 
                  default="False")
 
 # Retrieve all options and arguments:
-(options, args) = parser.parse_args()
+options = parser.parse_args()
 nprocs = options.procnum
+print(nprocs)
 bench = options.bench
 ############################################################
 
@@ -105,7 +106,7 @@ while np.mean(end_loop) < 1:
     loop_timer.append(timeit.default_timer())
 
   # Scatter init array4 to zeroth pyWorker communicator
-  comm_scatter(comm0, arra4, MPI.DOUBLE)
+  comm_scatter(comm0, array4, MPI.DOUBLE)
   array1 = comm_gather(comm0, array1)
 
   # Scatter array1 to first pyWorker communicator
