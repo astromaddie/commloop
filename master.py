@@ -32,7 +32,7 @@ start = timeit.default_timer()
 nprocs = 10
 iterat = 10
 
-################### Terminal Flag Parser ###################
+# Terminal Flag Parser
 # Initialise parser
 parser = argparse.ArgumentParser("usage: %prog [options] [arg1]")
 
@@ -47,16 +47,14 @@ group.add_argument("-g", "--benchmark", action="store_true", dest="bench",
 # Retrieve all options and arguments:
 options = parser.parse_args()
 nprocs = options.procnum
-print(nprocs)
 bench = options.bench
-############################################################
 
-###################### MPI Functions #######################
-def comm_spawn(exe, type):
+# MPI Functions
+def comm_spawn(type):
   if type == "c":
     comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker_c_wrapper.py"], maxprocs=nprocs)
-  else:
-    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker."+type, "--"+exe], maxprocs=nprocs)
+  elif type == 'py':
+    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker.py"], maxprocs=nprocs)
   return comm
 
 def comm_scatter(comm, array, type):
@@ -73,22 +71,25 @@ def comm_barrier(comm, quit=False):
   comm.Barrier()
   if quit == True:
     comm.Disconnect()
-############################################################
 
 if bench == True:
   start_mpi = timeit.default_timer()
 
 # Spawn the communicators
-comm0 = comm_spawn("demc", "py")
-comm1 = comm_spawn("incon", "py")
-comm2 = comm_spawn("transit", "c")
-comm3 = comm_spawn("outcon", "py")
+comm0 = comm_spawn("py")
+comm1 = comm_spawn("py")
+comm2 = comm_spawn("c")
+comm3 = comm_spawn("py")
 
-# Sample arrays
+# Sample arrays and their lengths
 array1 = np.ones(10*nprocs, dtype='d')*1.1
+lnarr1 = np.ones(10, dtype='i')*(len(array1) / nprocs)
 array2 = np.zeros(1000*nprocs, dtype='d')
+lnarr2 = np.ones(10, dtype='i')*(len(array2) / nprocs)
 array3 = np.zeros(1e6*nprocs, dtype='d')
+lnarr3 = np.ones(10, dtype='i')*(len(array3) / nprocs)
 array4 = np.ones(10*nprocs, dtype='d')*1.1
+lnarr4 = np.ones(10, dtype='i')*(len(array4) / nprocs)
 
 # Flag to exit loop
 end_loop = np.zeros(nprocs, dtype='i')
@@ -97,6 +98,14 @@ if bench == True:
   start_loop = timeit.default_timer()
   loop_timer = []
   loop_timer2 = []
+
+# Scatter the array lengths to their workers
+comm_scatter(comm0, lnarr4, MPI.INT)
+comm_scatter(comm0, lnarr1, MPI.INT)
+comm_scatter(comm1, lnarr1, MPI.INT)
+comm_scatter(comm1, lnarr2, MPI.INT)
+comm_scatter(comm3, lnarr3, MPI.INT)
+comm_scatter(comm3, lnarr4, MPI.INT)
 
 # Communication loop between 1 Master, 2 pyWorkers, & 1 C worker
 # Master acts as the hub
