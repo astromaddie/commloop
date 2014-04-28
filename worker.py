@@ -61,7 +61,7 @@ arrsiz = comm_scatter(arrsiz)
 array2 = np.ones(arrsiz[0], dtype='d')
 # Flag to determine when to exit the loop
 end_loop = np.zeros(1, dtype='i')
-
+#print("Array lengths: {0}, {1}".format(len(array1), len(array2)))
 # Worker loop, communicating with Master
 while end_loop[0] == False:
   if np.mean(end_loop) == True:

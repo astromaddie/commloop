@@ -50,11 +50,11 @@ nprocs = options.procnum
 bench = options.bench
 
 # MPI Functions
-def comm_spawn(type):
+def comm_spawn(type, spawn=nprocs):
   if type == "c":
-    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker_c_wrapper.py"], maxprocs=nprocs)
+    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker_c_wrapper.py"], maxprocs=spawn)
   elif type == 'py':
-    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker.py"], maxprocs=nprocs)
+    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker.py"], maxprocs=spawn)
   return comm
 
 def comm_scatter(comm, array, type):
@@ -76,20 +76,22 @@ if bench == True:
   start_mpi = timeit.default_timer()
 
 # Spawn the communicators
-comm0 = comm_spawn("py")
+comm0 = comm_spawn("py", spawn=1)
 comm1 = comm_spawn("py")
 comm2 = comm_spawn("c")
 comm3 = comm_spawn("py")
 
 # Sample arrays and their lengths
-array1 = np.ones(10*nprocs, dtype='d')*1.1
+array1 = np.ones(10*nprocs, dtype='d')
 lnarr1 = np.ones(10, dtype='i')*(len(array1) / nprocs)
-array2 = np.zeros(1000*nprocs, dtype='d')
+lnarr10 = np.ones(1, dtype='i')*len(array1)
+array2 = np.zeros(1e3*nprocs, dtype='d')
 lnarr2 = np.ones(10, dtype='i')*(len(array2) / nprocs)
 array3 = np.zeros(1e6*nprocs, dtype='d')
 lnarr3 = np.ones(10, dtype='i')*(len(array3) / nprocs)
 array4 = np.ones(10*nprocs, dtype='d')*1.1
 lnarr4 = np.ones(10, dtype='i')*(len(array4) / nprocs)
+lnarr40 = np.ones(1, dtype='i')*len(array4)
 
 # Flag to exit loop
 end_loop = np.zeros(nprocs, dtype='i')
@@ -100,8 +102,8 @@ if bench == True:
   loop_timer2 = []
 
 # Scatter the array lengths to their workers
-comm_scatter(comm0, lnarr4, MPI.INT)
-comm_scatter(comm0, lnarr1, MPI.INT)
+comm_scatter(comm0, lnarr40, MPI.INT)
+comm_scatter(comm0, lnarr10, MPI.INT)
 comm_scatter(comm1, lnarr1, MPI.INT)
 comm_scatter(comm1, lnarr2, MPI.INT)
 comm_scatter(comm3, lnarr3, MPI.INT)
@@ -119,7 +121,7 @@ while np.mean(end_loop) < 1:
   array1 = comm_gather(comm0, array1)
 
   # Scatter array1 to first pyWorker communicator
-  comm_scatter(comm1, array1, MPI.DOUBLE)
+  comm_scatter(comm1, array4, MPI.DOUBLE)
   array2 = comm_gather(comm1, array2)
 
   # Scatter array2 to C worker communicator
@@ -128,21 +130,19 @@ while np.mean(end_loop) < 1:
 
   # Scatter array3 to second pyWorker communicator
   comm_scatter(comm3, array3, MPI.DOUBLE)
-  array4 = comm_gather(comm3, array4)
-
-  # Set array1 to output array4 and begin loop again
-  array1 = array4
+  array4 = comm_gather(comm3, array1)
 
   # Countdown iterations to end loop
   iterat -= 1
   if iterat == 0:
-    end_loop += 1
+    end_loop = np.add(end_loop,1)
+  end_loop0 = np.array(np.mean(end_loop), dtype='i')
 
   # Scatter the endloop flag
   comm_scatter(comm3, end_loop, MPI.INT)
   comm_scatter(comm2, end_loop, MPI.INT)
   comm_scatter(comm1, end_loop, MPI.INT)
-  comm_scatter(comm0, end_loop, MPI.INT)
+  comm_scatter(comm0, end_loop0, MPI.INT)
 
   if bench == True:
     loop_timer2.append(timeit.default_timer() - loop_timer[-1])
