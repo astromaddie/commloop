@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import numpy as np
 import argparse
+import mcutils as mc
 
 '''
  * MPI CommLoop - Python Worker
@@ -28,47 +29,32 @@ comm = MPI.Comm.Get_parent()
 rank  = comm.Get_rank()
 size  = comm.Get_size()
 
-# MPI Functions
-def comm_scatter(array):
-  comm.Barrier()
-  comm.Scatter(None, array, root=0)
-  return array
-
-def comm_gather(array, type):
-  # Check array contents type, then scatter accordingly.
-  # If elements are not int or float, exit function.
-  comm.Barrier()
-  comm.Gather([array, type], None, root=0)
-
-def comm_barrier():
-  comm.Barrier()
-
 def worker_loop(array_1, array_2, end_loop):
-  array_1 = comm_scatter(array_1)
+  array_1 = mc.comm_scatter(comm, array_1)
   scale = np.mean(array_1) * 1.000001
   array_2 = np.multiply(array_2, scale)
-  comm_gather(array_2, MPI.DOUBLE)
+  mc.comm_gather(comm, array_2, mpitype=MPI.DOUBLE)
   return array_2
 
 # Sample arrays
 # Array lengths are passed from master.py
 #   array1
 arrsiz = np.ones(1, dtype='i')
-arrsiz = comm_scatter(arrsiz)
+arrsiz = mc.comm_scatter(comm, arrsiz)
 array1 = np.ones(arrsiz[0], dtype='d')
 #   array2
-arrsiz = comm_scatter(arrsiz)
+arrsiz = mc.comm_scatter(comm, arrsiz)
 array2 = np.ones(arrsiz[0], dtype='d')
+
 # Flag to determine when to exit the loop
 end_loop = np.zeros(1, dtype='i')
-#print("Array lengths: {0}, {1}".format(len(array1), len(array2)))
+
 # Worker loop, communicating with Master
 while end_loop[0] == False:
   if np.mean(end_loop) == True:
     break
   array2 = worker_loop(array1, array2, end_loop)
-  end_loop = comm_scatter(end_loop)
+  end_loop = mc.comm_scatter(comm, end_loop)
 
 # Close communications and disconnect
-comm.Barrier()
-comm.Disconnect()
+mc.exit(comm=comm)
