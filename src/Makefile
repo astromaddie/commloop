@@ -9,5 +9,5 @@ CFLAGS		= -fPIC -I/usr/include/python2.7
 python::
 	@echo "Compiling code"
 	@$(CC) $(CFLAGS) -o $(IFILE) $(SRC)
-	@echo "Moving file to ../bin"
+	@echo "Moving file to bin/"
 	@mv worker_c ../bin
