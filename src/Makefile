@@ -4,7 +4,7 @@ IFILE		= worker_c
 
 # C compilation variables
 CC		= mpicc
-CFLAGS		= -fPIC -I/usr/include/python2.7
+CFLAGS		= -fPIC
 
 python::
 	@echo "Compiling code"
