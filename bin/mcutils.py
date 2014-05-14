@@ -26,12 +26,6 @@ def comm_spawn(cmd, arg, nprocs):
 
   MPI.COMM_SELF.Spawn(cmd, arg, nprocs)
   return comm     
-#  if ext == 'py':
-#    arg = [worker]
-#    comm = MPI.COMM_SELF.Spawn(sys.executable, arg, nprocs)
-#  elif:
-#    comm = MPI.COMM_SELF.Spawn(worker, arg, nprocs)
-#  return comm
 
 def comm_scatter(comm, array, mpitype=None):
   """ 
