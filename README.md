@@ -20,42 +20,23 @@ The code currently passes dummy arrays in the following structure:
 
 ###Files
 
-- `master.py`
+- `bin/master.py`
  - Holds all the master MPI calls
-- `worker.py`
- - Holds worker MPI calls for both Python portions of CommLoop
+- `bin/worker.py`
+ - Holds worker MPI calls for both Python portions of Commloop
+- `bin/worker_c`
+ - Holds worker MPI calls for C portion of Commloop
 - `src/Makefile`
- - Compiles the Python-executable C worker
+ - Compiles the C worker
 - `src/worker_c.c`
- - Holds worker MPI calls for the C portion of CommLoop
-- `src/worker_c.i`
- - SWIG interface file for compiling C wrapped in Python code.
-- `_worker_c.so`
- - Compiled worker_c shared object file
-- `worker_c.py`
- - SWIG wrapper to execute `_worker_c.so`
-- `worker_c_wrapper.py`
- - Python code to run worker_loop() from the SWIG-compiled worker_c
+ - Holds worker MPI calls for the C portion of Commloop
 
 ###Makefile
 
-To compile the C worker, simply call `make` in src/ and move the shared object file out to the directory with the Python scripts.
+To compile the C worker, simply call `make` in src/. The compiled binary will be moved to bin/ automatically with the -f flag.
 
-The makefile generates Python-executable C code with the following steps
-
-1. Generate the SWIG wrapper with
-
-  > `swig -python worker_c.i`
-
-2. Compile it with
-
-  > `mpicc -fPIC $(python-config --includes) -c worker_c.c worker_c_wrap.c`
-
-3. Create the shared object file with
-
-  > `mpicc -shared worker_c.o worker_c_wrap.o -o _worker_c.so`
-
-The resulting python file just needs to be imported into another code, upon which the functions may be called normally.
+The makefile generates Python-executable C code with the following command
+  > `mpicc -fPIC -o worker_c worker_c.c`
 
 ###CommLoop Benchmarks
 
