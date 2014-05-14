@@ -49,24 +49,16 @@ group.add_argument("-g", "--benchmark", action="store_true", dest="bench",
 options = parser.parse_args()
 nprocs = options.procnum
 bench = options.bench
-
-# MPI Functions
-def comm_spawn(type, spawn=nprocs):
-  if type == "c":
-    cmd = 'worker_c'
-    comm = MPI.COMM_SELF.Spawn(cmd, None, spawn)
-  elif type == 'py':
-    comm = MPI.COMM_SELF.Spawn(sys.executable, args=["worker.py"], maxprocs=spawn)
-  return comm
+py = sys.executable
 
 if bench == True:
   start_mpi = timeit.default_timer()
 
 # Spawn the communicators
-comm0 = comm_spawn("py", spawn=1)
-comm1 = comm_spawn("py")
-comm2 = comm_spawn("c")
-comm3 = comm_spawn("py")
+comm0 = comm_spawn(py, ["worker.py"], 1)
+comm1 = comm_spawn(py, ["worker.py"], spawn)
+comm2 = comm_spawn("worker_c", None, spawn)
+comm3 = comm_spawn(py, ["worker.py"], spawn)
 
 # Sample arrays and their lengths
 array1 = np.ones(10*nprocs, dtype='d')
