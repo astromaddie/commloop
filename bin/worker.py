@@ -1,7 +1,7 @@
 from mpi4py import MPI
 import numpy as np
 import argparse
-import mcutils as mc
+import mutils as mu
 
 '''
  * MPI CommLoop - Python Worker
@@ -30,20 +30,20 @@ rank  = comm.Get_rank()
 size  = comm.Get_size()
 
 def worker_loop(array_1, array_2, end_loop):
-  array_1 = mc.comm_scatter(comm, array_1)
+  array_1 = mu.comm_scatter(comm, array_1)
   scale = np.mean(array_1) * 1.000001
   array_2 = np.multiply(array_2, scale)
-  mc.comm_gather(comm, array_2, mpitype=MPI.DOUBLE)
+  mu.comm_gather(comm, array_2, mpitype=MPI.DOUBLE)
   return array_2
 
 # Sample arrays
 # Array lengths are passed from master.py
 #   array1
 arrsiz = np.ones(1, dtype='i')
-arrsiz = mc.comm_scatter(comm, arrsiz)
+arrsiz = mu.comm_scatter(comm, arrsiz)
 array1 = np.ones(arrsiz[0], dtype='d')
 #   array2
-arrsiz = mc.comm_scatter(comm, arrsiz)
+arrsiz = mu.comm_scatter(comm, arrsiz)
 array2 = np.ones(arrsiz[0], dtype='d')
 
 # Flag to determine when to exit the loop
@@ -54,7 +54,7 @@ while end_loop[0] == False:
   if np.mean(end_loop) == True:
     break
   array2 = worker_loop(array1, array2, end_loop)
-  end_loop = mc.comm_scatter(comm, end_loop)
+  end_loop = mu.comm_scatter(comm, end_loop)
 
 # Close communications and disconnect
-mc.exit(comm=comm)
+mu.exit(comm=comm)
