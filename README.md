@@ -20,6 +20,9 @@ The code currently passes dummy arrays in the following structure:
 
 ###Files
 
+- `bin/mutils.py`
+ - Holds python wrappers for all used MPI functions in general form
+ - (used by both master.py and worker.py)
 - `bin/master.py`
  - Holds all the master MPI calls
 - `bin/worker.py`
