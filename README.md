@@ -2,6 +2,10 @@
 
 MPI-based communication loop framework; designed for communication between Python and C programs.
 
+To run the code as-is, execute the following line:
+
+  > `mpiexec -np 1 master.py`
+
 The master code acts as a hub, where it sends data to the first Python worker and awaits output. The outputted data from PyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to PyWorker2. Once that data is returned to Master, the loop repeats.
 
 The code currently passes dummy arrays in the following structure:
