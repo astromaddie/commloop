@@ -1,4 +1,4 @@
-###CommLoop
+###Commloop
 
 MPI-based communication loop framework; designed for communication between Python and C programs.
 
@@ -42,7 +42,7 @@ The code currently passes dummy arrays in the following structure:
 
 To compile the C worker, simply call `make` in src/. The compiled binary will be moved to bin/ automatically with the -f flag.
 
-The makefile generates Python-executable C code with the following command
+The makefile generates MPI-executable C code with the following command
   > `mpicc -fPIC -o worker_c worker_c.c`
 
 ###CommLoop Benchmarks
