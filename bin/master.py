@@ -28,10 +28,6 @@ start = timeit.default_timer()
  * You should have received a copy of the GNU General Public License
  * along with CommLoop.  If not, see <http://www.gnu.org/licenses/>.
 '''
-# Create nprocs number of processes of eaach worker script, spawn communicators,
-#  and send them the number of processes
-nprocs = 10
-iterat = 10
 
 # Terminal Flag Parser
 # Initialise parser
@@ -42,12 +38,16 @@ group = parser.add_argument_group('Runtime Options')
 group.add_argument("-p", "--num-procs", action="store",
                  help="Number of worker processes per spawn [default: %default]",
                  dest="procnum", type=int, default=10)
+group.add_argument("-i", "--num-iter", action="store",
+                 help="Number of iterations to loop through [default: %default]",
+                 dest="numiter", type=int, default=10)
 group.add_argument("-g", "--benchmark", action="store_true", dest="bench", 
                  default="False")
 
 # Retrieve all options and arguments:
 options = parser.parse_args()
 nprocs = options.procnum
+iterat = options.numiter
 bench = options.bench
 py = sys.executable
 
@@ -57,20 +57,23 @@ if bench == True:
 # Spawn the communicators
 comm0 = comm_spawn(py, ["worker.py"], 1)
 comm1 = comm_spawn(py, ["worker.py"], spawn)
-comm2 = comm_spawn("worker_c", None, spawn)
+comm2 = comm_spawn("worker_c", None,  spawn)
 comm3 = comm_spawn(py, ["worker.py"], spawn)
 
 # Sample arrays and their lengths
 array1 = np.ones(10*nprocs, dtype='d')
 lnarr1 = np.ones(10, dtype='i')*(len(array1) / nprocs)
-lnarr10 = np.ones(1, dtype='i')*len(array1)
+lnarr10 = np.ones(1, dtype='i')*len(array1) # array1 for master
+
 array2 = np.zeros(1e3*nprocs, dtype='d')
 lnarr2 = np.ones(10, dtype='i')*(len(array2) / nprocs)
+
 array3 = np.zeros(1e6*nprocs, dtype='d')
 lnarr3 = np.ones(10, dtype='i')*(len(array3) / nprocs)
+
 array4 = np.ones(10*nprocs, dtype='d')*1.1
 lnarr4 = np.ones(10, dtype='i')*(len(array4) / nprocs)
-lnarr40 = np.ones(1, dtype='i')*len(array4)
+lnarr40 = np.ones(1, dtype='i')*len(array4) # array4 for master
 
 # Flag to exit loop
 end_loop = np.zeros(nprocs, dtype='i')
@@ -83,8 +86,10 @@ if bench == True:
 # Scatter the array lengths to their workers
 mu.comm_scatter(comm0, lnarr40, mpitype=MPI.INT)
 mu.comm_scatter(comm0, lnarr10, mpitype=MPI.INT)
+
 mu.comm_scatter(comm1, lnarr1,  mpitype=MPI.INT)
 mu.comm_scatter(comm1, lnarr2,  mpitype=MPI.INT)
+
 mu.comm_scatter(comm3, lnarr3,  mpitype=MPI.INT)
 mu.comm_scatter(comm3, lnarr4,  mpitype=MPI.INT)
 
