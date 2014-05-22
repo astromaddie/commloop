@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import numpy as np
 import sys
+import math as m
 
 def comm_spawn(cmd, arg, nprocs):
   """ 
@@ -24,7 +25,7 @@ def comm_spawn(cmd, arg, nprocs):
   05-14-2014	Madison		Initial implementation. madison.stemm@gmail.com
   """
 
-  MPI.COMM_SELF.Spawn(cmd, arg, nprocs)
+  comm = MPI.COMM_SELF.Spawn(cmd, arg, nprocs)
   return comm     
 
 def comm_scatter(comm, array, mpitype=None):
@@ -158,8 +159,41 @@ def progressbar(frac):
    Modification History:
    ---------------------
    2014-04-19  patricio  Initial implementation.
-  2014-05-06  Madison   Ported implementation to Commloop
+   2014-05-06  Madison   Ported implementation to Commloop
    """
    barlen = int(np.clip(10*frac, 0, 10))
    bar = ":"*barlen + " "*(10-barlen)
    print("\n[%s] %5.1f%% completed  (%s)"%(bar, 100*frac, time.ctime()))
+
+def planck(T=1400, wave=[1e-8, 1e-4]):
+  """ 
+  Generates a Planck distribution at a specified blackbody temperature,
+  over a defined wavelength spectral range.
+
+  Parameters:
+  -----------
+  T: int
+      Temperature of blackbody object [units: Kelvin]
+  wave: list of int
+      Wavelength boundaries to integrate over (in nm steps) [units: meter]
+
+  Modification History:
+  ---------------------
+  2014-05-22  Madison   Initial implementation.
+  """
+
+  h = 6.83e-34 # J/s
+  c = 3e8      # m/s
+  T = 1400     # K
+  k = 1.38e-23 # J/K
+  nWaves = (wave[1] - wave[0]) / 1e-9
+  planck = np.ones(nWaves)
+  waves = np.ones(nWaves)
+  wave1 = wave[0]
+  for i in np.arange(nWaves):
+    wave = wave1 + i*1e-9
+    bottom = (np.exp((h * c) / (wave * k * T)) - 1)
+    top = ((2 * h * c**2) / wave**5)
+    planck[i] = top / bottom
+    waves[i] = wave
+return planck, waves
