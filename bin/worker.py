@@ -31,7 +31,7 @@ size  = comm.Get_size()
 
 def worker_loop(array_1, array_2):
   array_1 = mu.comm_scatter(comm, array_1)
-  scale = np.mean(array_1) * 1.000001
+  scale = np.mean(array_1) / 2
   array_2 = np.multiply(array_2, scale)
   mu.comm_gather(comm, array_2, mpitype=MPI.DOUBLE)
   return array_2
