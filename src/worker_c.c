@@ -39,13 +39,7 @@ MPI_Comm comm;
 MPI_Init(NULL, NULL);
 MPI_Comm_get_parent(&comm);
 
-// Populate sample array
-for( i = 0; i < nelements2; i++ ){
-	output[i] = 1.000001;
-}
-
 // Number of iterations to loop over
-MPI_Barrier(comm);
 MPI_Bcast(&iterat, 1, MPI_INT, root, comm);
 
 printf("iterat=%d\n",iterat);
@@ -53,18 +47,20 @@ printf("iterat=%d\n",iterat);
 while (iterat >= 0) {
 
 	// Scatter in the array from the first worker's output
-	MPI_Barrier(comm);
 	MPI_Scatter(sendbuff, nelements1, MPI_DOUBLE, input, nelements1, MPI_DOUBLE, root, comm);
 
+	// Populate sample array
+	for( i = 0; i < nelements2; i++ ){
+		output[i] = input[0] / 2;
+	}
+
 	// Scatter back out the new array
-	MPI_Barrier(comm);
 	MPI_Gather(output, nelements2, MPI_DOUBLE, sendbuff, nelements1, MPI_DOUBLE, root, comm);
 
 	iterat -= 1;
 }
 
 // Close communications
-MPI_Barrier(comm);
 MPI_Finalize();
 
 }

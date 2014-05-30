@@ -53,7 +53,6 @@ def comm_scatter(comm, array, mpitype=None):
   2014-04-18  patricio  Joined master and worker routines.
   2014-05-06  Madison   Ported implementation to Commloop
   """
-  comm.Barrier()
   if mpitype is None:  # Receive
     comm.Scatter(None, array, root=0)
     return array
@@ -82,7 +81,6 @@ def comm_gather(comm, array, mpitype=None):
   2014-04-18  patricio  Joined master and worker routines.
   2014-05-06  Madison   Ported implementation to Commloop
   """
-  comm.Barrier()
   if mpitype is None:  # Receive
     comm.Gather(None, array,            root=MPI.ROOT)
     return array
@@ -109,7 +107,6 @@ def comm_bcast(comm, array, mpitype=None):
   2014-04-18  patricio  Initial implementation. pcubillos@fulbrightmail.org
   2014-05-06  Madison   Ported implementation to Commloop
   """
-  comm.Barrier()
   if mpitype is None:  # Receive
     comm.Bcast(array,            root=0)
   else:                # Send
@@ -131,7 +128,6 @@ def exit(comm):
   2014-05-06  Madison   Ported implementation to Commloop
   2014-05-30  Madison   Revised for purpose in Commloop
   """
-  comm.Barrier()
   comm.Disconnect()
 
 def progressbar(frac):
