@@ -8,6 +8,8 @@ To run the code as-is, execute the following line:
 
 The master code acts as a hub, where it sends data to the first Python worker and awaits output. The outputted data from PyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to PyWorker2. Once that data is returned to Master, the loop repeats.
 
+The workers all scale the data they receive by 1.000001 before sending it back. This scaling factor is purely to cause a trackable increase in the values without the numbers blowing up over large numbers of iterations.
+
 The code currently passes dummy arrays in the following structure:
 
 
