@@ -46,37 +46,33 @@ group.add_argument("-g", "--benchmark", action="store_true", dest="bench",
 
 # Retrieve all options and arguments:
 options = parser.parse_args()
-nprocs = options.procnum
-iterat = options.numiter
-bench = options.bench
-py = sys.executable
+spawn   = options.procnum
+iterat  = options.numiter
+bench   = options.bench
 
 if bench == True:
   start_mpi = timeit.default_timer()
 
 # Spawn the communicators
-comm0 = comm_spawn(py, ["worker.py"], 1)
-comm1 = comm_spawn(py, ["worker.py"], spawn)
-comm2 = comm_spawn("worker_c", None,  spawn)
-comm3 = comm_spawn(py, ["worker.py"], spawn)
+comm0 = mu.comm_spawn(sys.executable, ["worker.py"], 1)
+comm1 = mu.comm_spawn(sys.executable, ["worker.py"], spawn)
+comm2 = mu.comm_spawn("worker_c", None,  spawn)
+comm3 = mu.comm_spawn(sys.executable, ["worker.py"], spawn)
 
 # Sample arrays and their lengths
-array1 = np.ones(10*nprocs, dtype='d')
-lnarr1 = np.ones(10, dtype='i')*(len(array1) / nprocs)
+array1 = np.ones(10*spawn, dtype='d')
+lnarr1 = np.ones(10, dtype='i')*(len(array1) / spawn)
 lnarr10 = np.ones(1, dtype='i')*len(array1) # array1 for master
 
-array2 = np.zeros(1e3*nprocs, dtype='d')
-lnarr2 = np.ones(10, dtype='i')*(len(array2) / nprocs)
+array2 = np.zeros(1e3*spawn, dtype='d')
+lnarr2 = np.ones(10, dtype='i')*(len(array2) / spawn)
 
-array3 = np.zeros(1e6*nprocs, dtype='d')
-lnarr3 = np.ones(10, dtype='i')*(len(array3) / nprocs)
+array3 = np.zeros(1e6*spawn, dtype='d')
+lnarr3 = np.ones(10, dtype='i')*(len(array3) / spawn)
 
-array4 = np.ones(10*nprocs, dtype='d')*1.1
-lnarr4 = np.ones(10, dtype='i')*(len(array4) / nprocs)
+array4 = np.ones(10*spawn, dtype='d')*1.1
+lnarr4 = np.ones(10, dtype='i')*(len(array4) / spawn)
 lnarr40 = np.ones(1, dtype='i')*len(array4) # array4 for master
-
-# Flag to exit loop
-end_loop = np.zeros(nprocs, dtype='i')
 
 if bench == True:
   start_loop = timeit.default_timer()
@@ -84,19 +80,31 @@ if bench == True:
   loop_timer2 = []
 
 # Scatter the array lengths to their workers
+print(lnarr40)
 mu.comm_scatter(comm0, lnarr40, mpitype=MPI.INT)
 mu.comm_scatter(comm0, lnarr10, mpitype=MPI.INT)
-
+print("Got through to 1")
 mu.comm_scatter(comm1, lnarr1,  mpitype=MPI.INT)
 mu.comm_scatter(comm1, lnarr2,  mpitype=MPI.INT)
+print("Got through to 2")
 
 mu.comm_scatter(comm3, lnarr3,  mpitype=MPI.INT)
 mu.comm_scatter(comm3, lnarr4,  mpitype=MPI.INT)
+print("Got through to 3")
+
+# Bcast iterat to all workers
+niterat = np.asarray([iterat], 'i')
+mu.comm_bcast(comm0, niterat, MPI.INT)
+mu.comm_bcast(comm1, niterat, MPI.INT)
+mu.comm_bcast(comm2, niterat, MPI.INT)
+mu.comm_bcast(comm3, niterat, MPI.INT)
+print("Bcasted to all workers")
+
 
 # Communication loop between 1 Master, 2 pyWorkers, & 1 C worker
 # Master acts as the hub
-while np.mean(end_loop) < 1:
-
+while iterat >= 0:
+  print(iterat)
   if bench == True:
     loop_timer.append(timeit.default_timer())
 
@@ -116,30 +124,27 @@ while np.mean(end_loop) < 1:
   mu.comm_scatter(comm3, array3, mpitype=MPI.DOUBLE)
   array4 = mu.comm_gather(comm3, array1)
 
+  print("array4: {0}".format(np.mean(array4)))
+
   # Countdown iterations to end loop
   iterat -= 1
-  if iterat == 0:
-    end_loop = np.add(end_loop,1)
-  end_loop0 = np.array(np.mean(end_loop), dtype='i')
-
-  # Scatter the endloop flag
-  mu.comm_scatter(comm3, end_loop, mpitype=MPI.INT)
-  mu.comm_scatter(comm2, end_loop, mpitype=MPI.INT)
-  mu.comm_scatter(comm1, end_loop, mpitype=MPI.INT)
-  mu.comm_scatter(comm0, end_loop0, mpitype=MPI.INT)
 
   if bench == True:
     loop_timer2.append(timeit.default_timer() - loop_timer[-1])
 
-  # Exit!
-  if np.mean(end_loop) == True:
-    break
-
+print("Exited the loop!")
 # Orders each worker to halt until all have caught up
 # Then close communicators
-mu.exit(comm=comm0)
-mu.exit(comm=comm1)
-mu.exit(comm=comm3)
+mu.exit(comm0)
+print("Closed 1")
+mu.exit(comm1)
+print("Closed 2")
+mu.exit(comm2)
+print("Closed 3")
+mu.exit(comm3)
+print("Closed 4")
+
+print("Finished disconnecting.")
 
 if bench == True:
   stop = timeit.default_timer()

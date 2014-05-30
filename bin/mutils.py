@@ -116,7 +116,7 @@ def comm_bcast(comm, array, mpitype=None):
     comm.Bcast([array, mpitype], root=MPI.ROOT)
 
 
-def exit(comm=None, abort=False, message=None, comm2=None):
+def exit(comm):
   """ 
   Stop execution.
 
@@ -124,27 +124,15 @@ def exit(comm=None, abort=False, message=None, comm2=None):
   -----------
   comm: MPI communicator
      An MPI Intracommunicator.
-  abort: Boolean
-     If True send (gather) an abort flag integer through comm.
-  message: String
-     Print message on exit.
 
   Modification History:
   ---------------------
   2014-04-20  patricio  Initial implementation. pcubillos@fulbrightmail.org
   2014-05-06  Madison   Ported implementation to Commloop
+  2014-05-30  Madison   Revised for purpose in Commloop
   """
-  if message is not None:
-    print(message)
-  if comm is not None:
-    if abort:
-      comm_gather(comm, np.array([1]), MPI.INT)
-    comm.Barrier()
-    comm.Disconnect()
-  if comm2 is not None:
-    comm2.Barrier()
-    comm2.Disconnect()
-  sys.exit(0)
+  comm.Barrier()
+  comm.Disconnect()
 
 def progressbar(frac):
    """ 
@@ -196,4 +184,4 @@ def planck(T=1400, wave=[1e-8, 1e-4]):
     top = ((2 * h * c**2) / wave**5)
     planck[i] = top / bottom
     waves[i] = wave
-return planck, waves
+  return planck, waves

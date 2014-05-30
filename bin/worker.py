@@ -29,32 +29,38 @@ comm = MPI.Comm.Get_parent()
 rank  = comm.Get_rank()
 size  = comm.Get_size()
 
-def worker_loop(array_1, array_2, end_loop):
+def worker_loop(array_1, array_2):
   array_1 = mu.comm_scatter(comm, array_1)
   scale = np.mean(array_1) * 1.000001
   array_2 = np.multiply(array_2, scale)
   mu.comm_gather(comm, array_2, mpitype=MPI.DOUBLE)
   return array_2
-
+print("Got to start")
 # Sample arrays
 # Array lengths are passed from master.py
 #   array1
-arrsiz = np.ones(1, dtype='i')
+arrsiz = np.ones(1, 'i')
 arrsiz = mu.comm_scatter(comm, arrsiz)
+print(arrsiz)
 array1 = np.ones(arrsiz[0], dtype='d')
+print("Got arrsiz 1 {0}".format(arrsiz))
 #   array2
 arrsiz = mu.comm_scatter(comm, arrsiz)
 array2 = np.ones(arrsiz[0], dtype='d')
+print("Got arrsize 2: {0}".format(arrsiz))
 
-# Flag to determine when to exit the loop
-end_loop = np.zeros(1, dtype='i')
+# Receive number of iterations to loop over
+iterat = np.asarray(-1, 'i')
+#iterat = [-1]
+print("About to receive iterat")
+mu.comm_bcast(comm, iterat)
+print("Receive iterat: {0}".format(iterat))
 
 # Worker loop, communicating with Master
-while end_loop[0] == False:
-  if np.mean(end_loop) == True:
-    break
-  array2 = worker_loop(array1, array2, end_loop)
-  end_loop = mu.comm_scatter(comm, end_loop)
+while iterat >= 0:
+  print("Worker {0} iterat: {1}".format(rank, iterat))
+  array2 = worker_loop(array1, array2)
+  iterat -= 1
 
 # Close communications and disconnect
 mu.exit(comm=comm)

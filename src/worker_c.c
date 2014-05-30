@@ -27,7 +27,7 @@ int nelements1 = 1000;
 int nelements2 = 1E6;
 int myid, world_size;//, size;
 int root = 0;
-int endloop[1];
+int iterat = -1;
 double input[nelements1];
 double output[nelements2];
 double sendbuff[nelements1];
@@ -41,12 +41,16 @@ MPI_Comm_get_parent(&comm);
 
 // Populate sample array
 for( i = 0; i < nelements2; i++ ){
-	output[i] = 1.00001;
+	output[i] = 1.000001;
 }
 
-// Endloop flag, handled as an array for MPI
-endloop[0] = 0;
-while ( endloop[0] < 1) {
+// Number of iterations to loop over
+MPI_Barrier(comm);
+MPI_Bcast(&iterat, 1, MPI_INT, root, comm);
+
+printf("iterat=%d\n",iterat);
+
+while (iterat >= 0) {
 
 	// Scatter in the array from the first worker's output
 	MPI_Barrier(comm);
@@ -56,12 +60,11 @@ while ( endloop[0] < 1) {
 	MPI_Barrier(comm);
 	MPI_Gather(output, nelements2, MPI_DOUBLE, sendbuff, nelements1, MPI_DOUBLE, root, comm);
 
-	// Define whether or not to break the loop
-	MPI_Barrier(comm);
-	MPI_Scatter(sendbuff, nelements1, MPI_INT, endloop, recv, MPI_INT, root, comm);
+	iterat -= 1;
 }
 
 // Close communications
+MPI_Barrier(comm);
 MPI_Finalize();
 
 }
