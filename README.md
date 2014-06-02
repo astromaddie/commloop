@@ -1,6 +1,10 @@
-###Commloop
+##Commloop
 
 MPI-based communication loop framework; designed for communication between Python and C programs.
+
+###Background
+
+MPI is an interface used to 
 
 To run the code as-is, execute the following line:
 
