@@ -4,13 +4,15 @@ MPI-based communication loop framework; designed for communication between Pytho
 
 ###Background
 
-MPI is an interface used to 
+MPI (Message-Passing Interface) is a standard communications protocol used to add parallel processing in programs. In this implementation, it creates separate programs as parallel processes and uses the interface to pass data back and forth between the spawned programs, allowing communication between programs of different languages.
 
-To run the code as-is, execute the following line:
+Commloop is designed to be modular and expandable, with `master.py` acting as a central hub, and the workers being easily replaceable. MPI calls are all stored as function wrappers in `mutils.py`, so that MPI could be easily replaced with another parallel processing interface at a later date.
 
-  > `mpiexec -np 1 master.py`
+To run the code as-is, run:
 
-The master code acts as a hub, where it sends data to the first Python worker and awaits output. The outputted data from PyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to PyWorker2. Once that data is returned to Master, the loop repeats.
+  > `mpiexec master.py`
+
+The master code acts as a hub, where it sends data to the first Python worker and awaits output. The outputted data from pyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to PyWorker2. Once that data is returned to Master, the loop repeats.
 
 The workers all divide the data they receive in half before sending it back. This scaling factor allows the starting number to rapidly approach zero, so there is a traceable difference between each worker operation, without risk of the values blowing up and causing double overflow issues.
 
@@ -73,8 +75,8 @@ All of the following benchmarks are done with 10 processes per spawned Python wo
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
-| Start MPI Comm  | 3.52986693382    |
-| First loop iter | 1.15215110779    |
-| Last loop iter  | 0.39165186882    |
-| Avg iteration   | 0.40219643116    |
-| Total Code      | 43.7606859207    |
+| Start MPI Comm  | 0.291091918945   |
+| First loop iter | 0.202884912491   |
+| Last loop iter  | 0.192095041275   |
+| Avg iteration   | 0.194536820277   |
+| Total Code      | 2.6813394070     |
