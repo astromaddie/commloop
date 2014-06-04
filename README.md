@@ -53,30 +53,30 @@ To compile the C worker, simply call `make` in src/. The compiled binary will be
 The makefile generates MPI-executable C code with the following command
   > `mpicc -fPIC -o worker_c worker_c.c`
 
-###CommLoop Benchmarks
+###Commloop Benchmarks
 
-All of the following benchmarks are done with 10 processes per spawned Python worker with 400 iterations. The cumulative times are then averaged. Performance remains constant up to about 1KB, and begins decreasing linearly as the array size is increased. 10MB arrays were untested, but assumed to be on the order of 45s. Interestingly, consecutively handling arrays of varying sizes results in a larger performance loss. The final benchmark (10B, 1KB, 1MB, 10B) was run with the default sourcecode setup, with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns. The loop speeds indicate less performance loss with a C worker, than a Python worker.
+All of the following benchmarks are done with 10 processes per spawned Python worker with 400 iterations. The cumulative times are then averaged. Performance remains constant up to about 10KB, before runtimes begin to quickly jump logarithmically. The final benchmark (10B, 1KB, 1MB, 10B) was run with the default sourcecode setup, with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
 
 #### Runtimes
 
-| Size of Array    | Mean Time (in seconds)    |
-| :-------------:  | :-------------:           |
-|         1B       |       0.00505563914776    |
-|        10B       |       0.0050656175613     |
-|       100B       |       0.0056332963705     |
-|        1KB       |       0.00832622706890    |
-|       10KB       |       0.0449095028639     |
-|      100KB       |       0.492187131643      |
-|        1MB       |       4.45193855694       |
-| 1B, 10B, 100B, 1KB, 10KB      | 0.0697515845299    |
-| 10B, 1KB, 1MB, 10B      | 0.40219643116      |
+![Runtime Plot](http://i.imgur.com/YCnfz6B.png)
+
+| Size of Array    | Mean Time (in seconds)|
+| :-------------:  | :-------------:       |
+|         1B       |       0.000379        |
+|        10B       |       0.000365        |
+|       100B       |       0.000437        |
+|        1KB       |       0.000466        |
+|       10KB       |       0.000729        |
+|      100KB       |       0.004208        |
+|        1MB       |       0.049231        |
+|       10MB       |       0.476789        |
+|      100MB       |       8.888832        |
 
 #### Default setup breakdown
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
 | Start MPI Comm  | 0.291091918945   |
-| First loop iter | 0.202884912491   |
-| Last loop iter  | 0.192095041275   |
-| Avg iteration   | 0.194536820277   |
-| Total Code      | 2.6813394070     |
+| Avg Iteration   | 0.194536820277   |
+| Total Code      | 82.5224819183    |
