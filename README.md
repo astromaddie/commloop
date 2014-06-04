@@ -59,7 +59,15 @@ The makefile generates MPI-executable C code with the following command
 
 All of the following benchmarks are done with 10 processes per spawned Python worker with 400 iterations. The cumulative times are then averaged. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The final benchmark (10B, 1KB, 1MB, 10B) was run with the default sourcecode setup, with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
 
-#### Runtimes
+#### Default setup breakdown
+
+| Part of code    | Time (seconds)   |
+| :-------------: | :-------------:  |
+| Start MPI Comm  | 0.291091918945   |
+| Avg Iteration   | 0.194536820277   |
+| Total Code      | 82.5224819183    |
+
+#### Runtime Table
 
 | Size of Array    | Mean Time (in seconds)|
 | :-------------:  | :-------------:       |
@@ -73,10 +81,3 @@ All of the following benchmarks are done with 10 processes per spawned Python wo
 |       10MB       |       0.476789        |
 |      100MB       |       8.888832        |
 
-#### Default setup breakdown
-
-| Part of code    | Time (seconds)   |
-| :-------------: | :-------------:  |
-| Start MPI Comm  | 0.291091918945   |
-| Avg Iteration   | 0.194536820277   |
-| Total Code      | 82.5224819183    |
