@@ -10,10 +10,10 @@ MPI-based communication loop framework; designed for communication between Pytho
 * [Commloop Benchmarks](#commloop-benchmarks)
 
 ####Team Members
-* [Madison Stemm](https://github.com/astromaddie/) (author) ([email](<madison.stemm@gmail.com>))
-* [Patricio Cubillos](https://github.com/pcubillos/) ([email](<pcubillos@fulbrightmail.org>))
-* [Andrew Foster](https://github.com/AndrewSDFoster) ([email](<andrew.scott.foster@gmail.com>))
-* [Joe Harrington](https://github.com/joeharr4) ([email](<jh@physics.ucf.edu>))
+* [Madison Stemm](https://github.com/astromaddie/) (author) (<madison.stemm@gmail.com>)
+* [Patricio Cubillos](https://github.com/pcubillos/) (<pcubillos@fulbrightmail.org>)
+* [Andrew Foster](https://github.com/AndrewSDFoster) (<andrew.scott.foster@gmail.com>)
+* [Joe Harrington](https://github.com/joeharr4) (<jh@physics.ucf.edu>)
 
 ####Background
 
