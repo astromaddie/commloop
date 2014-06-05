@@ -2,7 +2,10 @@
 
 MPI-based communication loop framework; designed for communication between Python and C programs.
 
-###Background
+###Table of Contents
+* [Background](#background)
+
+####Background
 
 MPI (Message-Passing Interface) is a standard communications protocol used to add parallel processing in programs. In this implementation, it creates separate programs as parallel processes and uses the interface to pass data back and forth between the spawned programs, allowing communication between programs of different languages.
 
