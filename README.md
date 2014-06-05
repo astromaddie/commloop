@@ -3,7 +3,17 @@
 MPI-based communication loop framework; designed for communication between Python and C programs.
 
 ###Table of Contents
+* [Team Members](#team-members)
 * [Background](#background)
+* [Files](#files)
+* [Makefile](#makefile)
+* [Commloop Benchmarks](#commloop-benchmarks)
+
+####Team Members
+* [Madison Stemm](https://github.com/astromaddie/) (author) <madison.stemm@gmail.com>
+* [Patricio Cubillos](https://github.com/pcubillos/) <pcubillos@fulbrightmail.org>
+* [Andrew Foster](https://github.com/AndrewSDFoster) <andrew.scott.foster@gmail.com>
+* [Joe Harrington](https://github.com/joeharr4) <jh@physics.ucf.edu>
 
 ####Background
 
@@ -33,7 +43,7 @@ The code currently passes dummy arrays in the following structure:
 |                 | Array1 = Array4 |                 |
 |                 | _repeat_        |                 |
 
-###Files
+####Files
 
 - `bin/mutils.py`
  - Holds python wrappers for all used MPI functions in general form
@@ -49,14 +59,14 @@ The code currently passes dummy arrays in the following structure:
 - `src/worker_c.c`
  - Holds worker MPI calls for the C portion of Commloop
 
-###Makefile
+####Makefile
 
 To compile the C worker, simply call `make` in src/. The compiled binary will be moved to bin/ automatically with the -f flag.
 
 The makefile generates MPI-executable C code with the following command
   > `mpicc -fPIC -o worker_c worker_c.c`
 
-###Commloop Benchmarks
+####Commloop Benchmarks
 
 ![Runtime Plot](http://i.imgur.com/YCnfz6B.png)
 
