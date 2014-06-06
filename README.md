@@ -5,7 +5,7 @@ MPI-based communication loop framework; designed for communication between Pytho
 ###Table of Contents
 * [Team Members](#team-members)
 * [Background](#background)
-* [Files](#files)
+* [Filelist](#files)
 * [Makefile](#makefile)
 * [Commloop Benchmarks](#commloop-benchmarks)
 
