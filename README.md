@@ -96,6 +96,8 @@ All of the above benchmarks were done with 10 processes per spawned Python worke
 
 ##### Per-Array Plots of Benchmark Transfers
 
+The transfer times for all 1000 iterations for each benchmark were recorded to show the variations in transfer times. Spikes occur periodically, which may indicate an MPI buffer being flushed. 
+
 ###### 1 Byte
 ![1B](http://i.imgur.com/t5Rcnqh.png)
 ###### 10 Bytes
