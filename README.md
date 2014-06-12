@@ -70,7 +70,7 @@ The makefile generates MPI-executable C code with the following command
 
 ![Runtime Plot](http://i.imgur.com/YCnfz6B.png)
 
-All of the above benchmarks were done with 10 processes per spawned Python worker, each with 400 iterations. The cumulative times are then averaged. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The belowfinal benchmark was run with the default sourcecode setup (with arrays of sizes 10B, 1KB, 1MB, 10B respectively), with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
+All of the above benchmarks were done with 10 processes per spawned Python worker, each with 1000 iterations. The best and median times were recorded. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The belowfinal benchmark was run with the default sourcecode setup (with arrays of sizes 10B, 1KB, 1MB, 10B respectively), with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
 
 #### Default setup breakdown
 
@@ -82,15 +82,15 @@ All of the above benchmarks were done with 10 processes per spawned Python worke
 
 #### Runtime Table
 
-| Size of Array    | Mean Time (in seconds)|
-| :-------------:  | :-------------:       |
-|         1B       |       0.000379        |
-|        10B       |       0.000365        |
-|       100B       |       0.000437        |
-|        1KB       |       0.000466        |
-|       10KB       |       0.000729        |
-|      100KB       |       0.004208        |
-|        1MB       |       0.049231        |
-|       10MB       |       0.476789        |
-|      100MB       |       8.888832        |
+| Size of Array    | Median Time (in seconds)|  Minimum Time (in seconds)|
+| :-------------:  |   :-------------:       |      :-------------:      |
+|         1B       |         8.10623e-06     |         3.81469e-06       |
+|        10B       |         8.10623e-06     |         6.91413e-06       |
+|       100B       |         8.10623e-06     |         2.86102e-06       |
+|        1KB       |         6.19888e-06     |         4.76837e-06       |
+|       10KB       |         3.49283e-05     |         1.69277e-05       |
+|      100KB       |         0.00130105      |         0.00126290        |
+|        1MB       |         0.0130050       |         0.0125229         |
+|       10MB       |         0.155957        |         0.150859          |
+|      100MB       |         1.60676         |         0.852834          |
 
