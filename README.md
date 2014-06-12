@@ -70,9 +70,9 @@ The makefile generates MPI-executable C code with the following command
 
 ![Runtime Plot](http://i.imgur.com/U1kTDmv.png)
 
-All of the above benchmarks were done with 10 processes per spawned Python worker, each with 1000 iterations. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The belowfinal benchmark was run with the default sourcecode setup (with arrays of sizes 10B, 1KB, 1MB, 10B respectively), with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
+All of the above benchmarks were done with 10 processes per spawned Python worker, each with 1000 iterations. The min, max, median, and mean times were recorded for each transfer size. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The final benchmark was run with the default sourcecode setup (with arrays of sizes 10B, 1KB, 1MB, 10B respectively), with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
 
-#### Default setup breakdown
+##### Default setup breakdown
 
 | Part of code    | Time (seconds)   |
 | :-------------: | :-------------:  |
@@ -80,7 +80,7 @@ All of the above benchmarks were done with 10 processes per spawned Python worke
 | Avg Iteration   | 0.194536820277   |
 | Total Code      | 82.5224819183    |
 
-#### Runtime Table
+##### Runtime Table
 
 | Size of Array    | Median Time (in seconds)|  Minimum Time (in seconds)|
 | :-------------:  |   :-------------:       |      :-------------:      |
@@ -94,23 +94,23 @@ All of the above benchmarks were done with 10 processes per spawned Python worke
 |       [10MB](#10-megabytes)       |         0.155957        |         0.150859          |
 |      [100MB](#100-megabytes)       |         1.60676         |         0.852834          |
 
-#### Benchmark Transfer Times Plots Per Array Size
+##### Per-Array Plots of Benchmark Transfers
 
-##### 1 Byte
+###### 1 Byte
 ![1B](http://i.imgur.com/t5Rcnqh.png)
-##### 10 Bytes
+###### 10 Bytes
 ![10B](http://i.imgur.com/AjqqaUt.png)
-##### 100 Bytes
+###### 100 Bytes
 ![100B](http://i.imgur.com/utMjdSv.png)
-##### 1 Kilobyte
+###### 1 Kilobyte
 ![1KB](http://i.imgur.com/TcNpjzT.png)
-##### 10 Kilobytes
+###### 10 Kilobytes
 ![10KB](http://i.imgur.com/8TG0JpT.png)
-##### 100 Kilobytes
+###### 100 Kilobytes
 ![100KB](http://i.imgur.com/EXB1DfO.png)
-##### 1 Megabyte
+###### 1 Megabyte
 ![1MB](http://i.imgur.com/K30nAmw.png)
-##### 10 Megabytes
+###### 10 Megabytes
 ![10MB](http://i.imgur.com/v8jqBiZ.png)
-##### 100 Megabytes
+###### 100 Megabytes
 ![100MB](http://i.imgur.com/y8MCmtV.png)
