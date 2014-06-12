@@ -84,13 +84,33 @@ All of the above benchmarks were done with 10 processes per spawned Python worke
 
 | Size of Array    | Median Time (in seconds)|  Minimum Time (in seconds)|
 | :-------------:  |   :-------------:       |      :-------------:      |
-|         1B       |         8.10623e-06     |         3.81469e-06       |
-|        10B       |         8.10623e-06     |         6.91413e-06       |
-|       100B       |         8.10623e-06     |         2.86102e-06       |
-|        1KB       |         6.19888e-06     |         4.76837e-06       |
-|       10KB       |         3.49283e-05     |         1.69277e-05       |
-|      100KB       |         0.00130105      |         0.00126290        |
-|        1MB       |         0.0130050       |         0.0125229         |
-|       10MB       |         0.155957        |         0.150859          |
-|      100MB       |         1.60676         |         0.852834          |
+|         [1B](#1-byte)       |         8.10623e-06     |         3.81469e-06       |
+|        [10B](#10-bytes)       |         8.10623e-06     |         6.91413e-06       |
+|       [100B](#100-bytes)       |         8.10623e-06     |         2.86102e-06       |
+|        [1KB](#1-kilobyte)       |         6.19888e-06     |         4.76837e-06       |
+|       [10KB](#10-kilobytes)       |         3.49283e-05     |         1.69277e-05       |
+|      [100KB](#100-kilobytes)       |         0.00130105      |         0.00126290        |
+|        [1MB](#1-megabyte)       |         0.0130050       |         0.0125229         |
+|       [10MB](#10-megabytes)       |         0.155957        |         0.150859          |
+|      [100MB](#100-megabytes)       |         1.60676         |         0.852834          |
 
+#### Benchmark Transfer Times Plots Per Array Size
+
+##### 1 Byte
+![1B](http://i.imgur.com/t5Rcnqh.png)
+##### 10 Bytes
+![10B](http://i.imgur.com/AjqqaUt.png)
+##### 100 Bytes
+![100B](http://i.imgur.com/utMjdSv.png)
+##### 1 Kilobyte
+![1KB](http://i.imgur.com/TcNpjzT.png)
+##### 10 Kilobytes
+![10KB](http://i.imgur.com/8TG0JpT.pn)
+##### 100 Kilobytes
+![100KB](http://i.imgur.com/EXB1DfO.png)
+##### 1 Megabyte
+![1MB](http://i.imgur.com/K30nAmw.png)
+##### 10 Megabytes
+![10MB](http://i.imgur.com/v8jqBiZ.png)
+##### 100 Megabytes
+![100MB](http://i.imgur.com/y8MCmtV.png)
