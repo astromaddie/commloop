@@ -105,7 +105,7 @@ All of the above benchmarks were done with 10 processes per spawned Python worke
 ##### 1 Kilobyte
 ![1KB](http://i.imgur.com/TcNpjzT.png)
 ##### 10 Kilobytes
-![10KB](http://i.imgur.com/8TG0JpT.pn)
+![10KB](http://i.imgur.com/8TG0JpT.png)
 ##### 100 Kilobytes
 ![100KB](http://i.imgur.com/EXB1DfO.png)
 ##### 1 Megabyte
