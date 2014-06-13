@@ -68,7 +68,7 @@ The makefile generates MPI-executable C code with the following command
 
 ####Commloop Benchmarks
 
-![Runtime Plot](http://i.imgur.com/U1kTDmv.png)
+![Runtime Plot](http://i.imgur.com/jTubyQs.png)
 
 All of the above benchmarks were done with 10 processes per spawned Python worker, each with 1000 iterations. The min, max, median, and mean times were recorded for each transfer size. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The final benchmark was run with the default sourcecode setup (with arrays of sizes 10B, 1KB, 1MB, 10B respectively), with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
 
@@ -93,10 +93,11 @@ All of the above benchmarks were done with 10 processes per spawned Python worke
 |        [1MB](#1-megabyte)       |         0.0130050       |         0.0125229         |
 |       [10MB](#10-megabytes)       |         0.155957        |         0.150859          |
 |      [100MB](#100-megabytes)       |         1.60676         |         0.852834          |
+|      [1GB](#1-gigabytes)       |         20.5827         |         5.63851          |
 
 ##### Per-Array Plots of Benchmark Transfers
 
-The transfer times for all 1000 iterations for each benchmark were recorded to show the variations in transfer times. Spikes occur periodically, which may indicate an MPI buffer being flushed. 
+The transfer times for all 1000 iterations for each benchmark were recorded to show the variations in transfer times. Variance in the times are assumed to be caused by background processes in the computer, and spikes occur periodically, which may indicate an MPI buffer being flushed.
 
 ###### 1 Byte
 ![1B](http://i.imgur.com/t5Rcnqh.png)
@@ -116,3 +117,5 @@ The transfer times for all 1000 iterations for each benchmark were recorded to s
 ![10MB](http://i.imgur.com/v8jqBiZ.png)
 ###### 100 Megabytes
 ![100MB](http://i.imgur.com/y8MCmtV.png)
+###### 1 Gigabyte
+![1GB](http://i.imgur.com/VUkALjQ.png)
