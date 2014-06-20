@@ -22,8 +22,10 @@ MPI-based communication loop framework; designed for communication between Pytho
 
 * [Python 2.7.2](https://www.python.org/download/releases/2.7.2/)
 * [NumPy](http://www.numpy.org/)
-* [mpi4py](https://code.google.com/p/mpi4py/)
 * [MPICH](http://www.mpich.org/)
+* [mpi4py](https://code.google.com/p/mpi4py/)
+
+***Note:*** *MPICH must be installed before mpi4py!*
 
 ####Background
 
