@@ -2,8 +2,11 @@
 
 MPI-based communication loop framework; designed for communication between Python and C programs.
 
+***Important***_: Commloop and mpi4py were written for [MPICH](http://www.mpich.org/). Nested spawning is not functional with OpenMPI as of the time of this release._
+
 ###Table of Contents
 * [Team Members](#team-members)
+* [Requirements](#requirements)
 * [Background](#background)
 * [Filelist](#files)
 * [Makefile](#makefile)
@@ -14,6 +17,13 @@ MPI-based communication loop framework; designed for communication between Pytho
 * [Patricio Cubillos](https://github.com/pcubillos/) (<pcubillos@fulbrightmail.org>)
 * [Andrew Foster](https://github.com/AndrewSDFoster) (<andrew.scott.foster@gmail.com>)
 * [Joe Harrington](https://github.com/joeharr4) (<jh@physics.ucf.edu>)
+
+####Requirements
+
+* [Python 2.7.2](https://www.python.org/download/releases/2.7.2/)
+* [NumPy](http://www.numpy.org/)
+* [mpi4py](https://code.google.com/p/mpi4py/)
+* [MPICH](http://www.mpich.org/)
 
 ####Background
 
