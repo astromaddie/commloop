@@ -6,7 +6,7 @@ MPI-based communication loop framework; designed for communication between Pytho
 
 ###Table of Contents
 * [Team Members](#team-members)
-* [Requirements](#requirements)
+* [System Requirements](#system-requirements)
 * [Background](#background)
 * [Filelist](#files)
 * [Makefile](#makefile)
@@ -18,7 +18,7 @@ MPI-based communication loop framework; designed for communication between Pytho
 * [Andrew Foster](https://github.com/AndrewSDFoster) (<andrew.scott.foster@gmail.com>)
 * [Joe Harrington](https://github.com/joeharr4) (<jh@physics.ucf.edu>)
 
-####Requirements
+####System Requirements
 
 * [Python 2.7.2](https://www.python.org/download/releases/2.7.2/)
 * [NumPy](http://www.numpy.org/)
@@ -29,17 +29,17 @@ MPI-based communication loop framework; designed for communication between Pytho
 
 ####Background
 
-MPI (Message-Passing Interface) is a standard communications protocol used to add parallel processing in programs. In this implementation, it creates separate programs as parallel processes and uses the interface to pass data back and forth between the spawned programs, allowing communication between programs of different languages.
+MPI (Message-Passing Interface) is a communications protocol used to add parallel processing in programs. In this implementation, Commloop consists of a central hub (a 'Master') that interacts with a sequence of spawned programs ('Workers') as a mediator via a loop: Python and C workers are included here, but any language supported by MPI can be easily implemented. This allows communication between programs of different languages.
 
-Commloop is designed to be modular and expandable, with `master.py` acting as a central hub, and the workers being easily replaceable. MPI calls are all stored as function wrappers in `mutils.py`, so that MPI could be easily replaced with another parallel processing interface at a later date.
+We designed Commloop to be modular and expandable. As previously stated, the core of Commloop consists of a central hub (`master.py`), and C and Python workers (`worker_c.c` and `worker.py`, respectively). `mutils.py` contains a series of function wrappers for MPI calls, designed so that MPI could be easily replaced with another parallel processing interface at a later date.
 
-To run the code as-is, run:
+To execute the code as-is, run:
 
   > `mpiexec master.py`
 
-The master code acts as a hub, where it sends data to the first Python worker and awaits output. The outputted data from pyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to PyWorker2. Once that data is returned to Master, the loop repeats.
+Initially, the Master sends data to the first Python Worker and awaits output. The outputted data from pyWorker1 is sent back to Master, which then sends it to cWorker. The outputted cWorker data is returned to Master and sent to pyWorker2. Once that data is returned to Master, the loop repeats.
 
-The workers all divide the data they receive in half before sending it back. This scaling factor allows the starting number to rapidly approach zero, so there is a traceable difference between each worker operation, without risk of the values blowing up and causing double overflow issues.
+During each loop iteration, each Worker received an array of floats, divides it in half, and sends the resulting array back to the Master. This scaling factor allows the starting number to rapidly approach zero, so there is a traceable difference between each worker operation, without risk of the values blowing up and causing double overflow issues.
 
 The code currently passes dummy arrays in the following structure:
 
@@ -73,7 +73,7 @@ The code currently passes dummy arrays in the following structure:
 
 ####Makefile
 
-To compile the C worker, simply call `make` in src/. The compiled binary will be moved to bin/ automatically with the -f flag.
+To compile the C worker, simply call `make` in src/. The compiled binary will be moved to bin/ automatically, overwriting any existing binary.
 
 The makefile generates MPI-executable C code with the following command
   > `mpicc -fPIC -o worker_c worker_c.c`
@@ -82,7 +82,7 @@ The makefile generates MPI-executable C code with the following command
 
 ![Runtime Plot](http://i.imgur.com/jTubyQs.png)
 
-All of the above benchmarks were done with 10 processes per spawned Python worker, each with 1000 iterations. The min, max, median, and mean times were recorded for each transfer size. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The final benchmark was run with the default sourcecode setup (with arrays of sizes 10B, 1KB, 1MB, 10B respectively), with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
+The above plot is for a benchmark of MPI, rather than Commloop specifically. For this setup, we only used one Master and one Worker, with 10 processes per spawned Python worker. The code looped over 1000 iterations. We recorded the min, max, median, and mean times for each transfer size. Performance remains constant up to about 10KB, before runtimes begin to logarithmically increase. The final benchmark (below) was run with the default sourcecode setup (with arrays of sizes 10B, 1KB, 1MB, 10B respectively), with the 1MB array being passed to a C worker, showing runtimes at start, and loop speed breakdowns.
 
 ##### Default setup breakdown
 
