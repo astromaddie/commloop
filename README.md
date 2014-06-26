@@ -1,6 +1,6 @@
 ##Commloop
 
-MPI-based communication loop framework; designed for communication between Python and C programs.
+An MPI-based communication loop framework, designed for inter-program cross-lingual communication.
 
 ###Table of Contents
 * [Team Members](#team-members)
