@@ -23,7 +23,7 @@ An MPI-based communication loop framework, designed for inter-program cross-ling
 * [MPICH](http://www.mpich.org/)
 * [mpi4py](https://code.google.com/p/mpi4py/)
 
-***Important***_: Commloop and mpi4py were written for [MPICH](http://www.mpich.org/). Nested spawning is not functional with OpenMPI as of the time of this release. MPICH must be installed before mpi4py!_
+***Important***_: MPICH must be installed before mpi4py! Commloop and mpi4py were written for MPICH. Nested spawning is not functional with OpenMPI as of the time of this release._
 
 ####Background
 
